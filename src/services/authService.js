@@ -1,5 +1,13 @@
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+};
+
 export const authService = {
   register: async (userData) => {
     try {
@@ -24,9 +32,13 @@ export const authService = {
       const data = await response.json();
       console.log('Réponse du serveur:', data);
       
-      // Stocker le token dans le localStorage
       if (data.token) {
         localStorage.setItem('token', data.token);
+        // Stocker la date d'expiration
+        const decodedToken = parseJwt(data.token);
+        if (decodedToken && decodedToken.exp) {
+          localStorage.setItem('tokenExpiration', decodedToken.exp * 1000);
+        }
       }
       return data;
     } catch (error) {
@@ -40,7 +52,6 @@ export const authService = {
       console.log('Tentative de connexion avec:', credentials);
       console.log('URL de l\'API:', `${API_URL}/User/login`);
       
-      // Assurez-vous que seuls email et password sont envoyés
       const loginData = {
         email: credentials.email,
         password: credentials.password
@@ -64,9 +75,13 @@ export const authService = {
       const data = await response.json();
       console.log('Réponse du serveur:', data);
       
-      // Stocker le token dans le localStorage
       if (data.token) {
         localStorage.setItem('token', data.token);
+        // Stocker la date d'expiration
+        const decodedToken = parseJwt(data.token);
+        if (decodedToken && decodedToken.exp) {
+          localStorage.setItem('tokenExpiration', decodedToken.exp * 1000);
+        }
       }
       return data;
     } catch (error) {
@@ -77,13 +92,42 @@ export const authService = {
 
   logout: () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
   },
 
   isAuthenticated: () => {
-    return !!localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
+    // Vérifier l'expiration du token
+    const expiration = localStorage.getItem('tokenExpiration');
+    if (expiration) {
+      const expirationDate = new Date(parseInt(expiration));
+      if (expirationDate <= new Date()) {
+        // Token expiré, déconnexion
+        authService.logout();
+        return false;
+      }
+    }
+
+    return true;
   },
 
   getToken: () => {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    // Vérifier l'expiration du token
+    const expiration = localStorage.getItem('tokenExpiration');
+    if (expiration) {
+      const expirationDate = new Date(parseInt(expiration));
+      if (expirationDate <= new Date()) {
+        // Token expiré, déconnexion
+        authService.logout();
+        return null;
+      }
+    }
+
+    return token;
   }
 }; 

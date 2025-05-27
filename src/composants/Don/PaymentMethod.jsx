@@ -1,140 +1,111 @@
+import { useState, useEffect } from "react";
 import { CreditCard } from "lucide-react";
-import { useState } from "react";
+import PayPalButton from "../paypal/PaypalButton";
+import { usePaymentMethod } from "../../hooks/usePaymentMethod";
 import { IoLogoPaypal } from "react-icons/io5";
+// import { usePaymentMethod } from "@/hooks/usePaymentMethod";
+// import PayPalButton from "../paypal/PaypalButton";
 
-export const PaymentMethod = () => {
-  const [active, setActive] = useState("bank");
+const PaymentMethod = ({ amount, type }) => {
+  const [active, setActive] = useState(type || "bank");
+
+  const { handleStripeCheckout, handleCinetPay } = usePaymentMethod(active);
+
+  // Mettre à jour le bouton actif quand `type` change
+  useEffect(() => {
+    if (type) setActive(type);
+  }, [type]);
+
   return (
-    <>
-      <div>
-        <div className="w-full max-w-3xl mx-auto p-8">
-          <h2 className="text-2xl text-center font-semibold h-10 rounded-t-lg bg-blue-600 text-gray-700 dark:text-white ">
-            METHODES DE PAIEMENT
-          </h2>
+    <div className="w-full max-w-3xl mx-auto p-8">
+      <h2 className="text-2xl text-center font-semibold h-10 rounded-t-lg bg-blue-600 text-white">
+        MÉTHODES DE PAIEMENT
+      </h2>
 
-          <div className="grid gap-5 bg-white/90 dark:bg-gray-800 p-8 rounded-b-lg shadow-md border dark:border-gray-700">
-            {/* <!-- Payment Information --> */}
+      <div className="grid gap-5 bg-white/90 dark:bg-gray-800 p-8 rounded-b-lg shadow-md border dark:border-gray-700">
+        <div className="grid grid-cols-3 h-24 items-center gap-5">
+          {/* Stripe */}
+          <div className="grid justify-center">
+            <button onClick={() => setActive("bank")}>
+              <div className="grid justify-center">
+                <CreditCard size={48} color="purple" />
+              </div>
+              <div
+                className={`text-center w-28 font-semibold ${
+                  active === "bank" ? "border-b-4 border-black" : ""
+                }`}
+              >
+                Carte bancaire
+              </div>
+            </button>
+          </div>
 
-            <div className="grid grid-cols-3 w-auto h-24 items-center gap-5">
-              <div className="grid justify-center ">
-                <button onClick={() => setActive("bank")}>
-                  <div className="grid justify-center ">
-                    <CreditCard size={48} color="purple" />
-                  </div>
-                  <input disabled className={` ${active === "bank" ? "border-b-4 text-center w-28 border-black"  : "text-center  w-28"}`}  placeholder="Carte bancaire "/>
-                  <div></div>
-                </button>
+          {/* PayPal */}
+          <div className="grid justify-center">
+            <button onClick={() => setActive("paypal")}>
+              <div className="grid justify-center">
+                <IoLogoPaypal size={48} color="purple" />
               </div>
-              <div className="grid justify-center ">
-                <button onClick={() => setActive("paypal")}>
-                  <div className="grid justify-center " >
-                    <IoLogoPaypal size={48} color="purple"  />
-                  </div>
-                  <input disabled className={` ${active === "paypal" ? "border-b-4 text-center w-16 border-black"  : "text-center w-16"}`}  placeholder="PAYPAL "/>
-                </button>
+              <div
+                className={`text-center w-16 font-semibold ${
+                  active === "paypal" ? "border-b-4 border-black" : ""
+                }`}
+              >
+                PayPal
               </div>
-              <div className="grid justify-center ">
-                <button onClick={() => setActive("mobile")}>
-                  <div className="grid justify-center  ">
-                    <img
-                      className="rounded w-24 h-10 mb-1"
-                      src="/images/mobilemoney.png"
-                      alt="mobile money"
-                    />
-                  </div>
-                  <input disabled className={` ${active === "mobile" ? "border-b-4 text-center w-28 border-black"  : "text-center w-28"}`}  placeholder="Mobile money "/>
-                </button>
-              </div>
-            </div>
+            </button>
+          </div>
 
-            {active === "bank" && (
-              <div>
-                <div className="mt-4">
-                  <label
-                    htmlFor="card_number"
-                    className="block text-gray-700 dark:text-white mb-1"
-                  >
-                    Card Number
-                  </label>
-                  <input
-                    type="text"
-                    id="card_number"
-                    className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 mt-4">
-                  <div>
-                    <label
-                      htmlFor="exp_date"
-                      className="block text-gray-700 dark:text-white mb-1"
-                    >
-                      Expiration Date
-                    </label>
-                    <input
-                      type="text"
-                      id="exp_date"
-                      className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-                    />
-                  </div>
-                  <div>
-                    <label
-                      htmlFor="cvv"
-                      className="block text-gray-700 dark:text-white mb-1"
-                    >
-                      CVV
-                    </label>
-                    <input
-                      type="text"
-                      id="cvv"
-                      className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-                    />
-                  </div>
-                </div>
+          {/* CinetPay */}
+          <div className="grid justify-center">
+            <button onClick={() => setActive("mobile")}>
+              <div className="grid justify-center">
+                <img
+                  className="rounded w-24 h-10 mb-1"
+                  src="/images/mobilemoney.png"
+                  alt="Mobile Money"
+                />
               </div>
-            )}
-            {active === "paypal" && (
-              <div>
-                <div className="mt-4">
-                  <label
-                    htmlFor="card_number"
-                    className="block text-gray-700 dark:text-white mb-1"
-                    
-                  >
-                    paypal button
-                  </label>
-                  <input
-                    type="text"
-                    id="card_number"
-                    className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-                  />
-                </div>
+              <div
+                className={`text-center w-28 font-semibold ${
+                  active === "mobile" ? "border-b-4 border-black" : ""
+                }`}
+              >
+                Mobile money
               </div>
-            )}
-
-            {active === "mobile" && (
-              <div>
-                <div className="mt-4 w-full">
-                  <select name="" id="" className="w-full rounded">
-                    <option value="orange">orange</option>
-                    <option value="orange">mtn</option>
-                    <option value="orange">moov</option>
-                    <option value="orange">wave</option>
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-3 gap-4 mt-4">
-                  <div></div>
-                  <div></div>
-                  <div>
-                    <h1>moov</h1>
-                  </div>
-                </div>
-              </div>
-            )}
+            </button>
           </div>
         </div>
+
+        {/* Affichage conditionnel selon la méthode */}
+        {active === "bank" && (
+          <button
+            onClick={() => handleStripeCheckout(amount)}
+            className="bg-green-600 text-white p-2 rounded mt-4"
+            disabled={!amount}
+          >
+            Payer {amount ? `(${amount} €)` : ""} avec Stripe
+          </button>
+        )}
+
+        {active === "paypal" && (
+          <div>
+            <PayPalButton amount={amount?.toFixed(2)} currency="EUR" />
+          </div>
+        )}
+
+        {active === "mobile" && (
+          <button
+            onClick={() => handleCinetPay(amount)}
+            className="bg-green-600 text-white p-2 rounded mt-4"
+            disabled={!amount}
+          >
+            Payer {amount ? `(${amount} €)` : ""} avec CinetPay
+          </button>
+        )}
       </div>
-    </>
+    </div>
   );
 };
+
+export default PaymentMethod;

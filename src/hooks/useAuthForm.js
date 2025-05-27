@@ -31,8 +31,10 @@ const useAuthForm = (isLogin = true) => {
     // Validation du mot de passe
     if (!formData.password) {
       newErrors.password = "Le mot de passe est requis";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Le mot de passe doit contenir au moins 6 caractères";
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Le mot de passe doit contenir au moins 8 caractères";
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.password)) {
+      newErrors.password = "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial";
     }
 
     // Validations supplémentaires pour l'inscription
@@ -76,13 +78,15 @@ const useAuthForm = (isLogin = true) => {
 
     setLoading(true);
     try {
-      // Pour la connexion, on n'envoie que email et password
       const loginData = {
         email: formData.email,
         password: formData.password
       };
       
       const response = await authService.login(loginData);
+      
+      // Message de succès
+      setErrors({});
       
       // Redirection après connexion réussie
       navigate('/profil');
@@ -105,9 +109,11 @@ const useAuthForm = (isLogin = true) => {
 
     setLoading(true);
     try {
-      // Pour l'inscription, on envoie toutes les données sauf confirmPassword
       const { confirmPassword, ...registerData } = formData;
       const response = await authService.register(registerData);
+      
+      // Message de succès
+      setErrors({});
       
       // Redirection après inscription réussie
       navigate('/profil');
