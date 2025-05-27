@@ -12,7 +12,7 @@ export const Navbar = () => {
           </div>
           <div>
             <nav className="flex space-x-4">
-              <Link to="/" className="px-3 py-2 rounded-md hover:bg-gray-200">Accueil</Link>
+              <Link to="/connexion" className="px-3 py-2 rounded-md hover:bg-gray-200">Connexion</Link>
               <Link to="/profil" className="px-3 py-2 rounded-md hover:bg-gray-200">PROFIL</Link>
               <Link to="/membre" className="px-3 py-2 rounded-md hover:bg-gray-200">MEMBRE</Link>
               <Link to="/don" className="px-3 py-2 rounded-md hover:bg-gray-200">DON</Link>

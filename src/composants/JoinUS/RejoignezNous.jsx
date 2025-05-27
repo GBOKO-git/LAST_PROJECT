@@ -1,25 +1,31 @@
-const RejoignezNous = () => {
+import { Link } from 'react-router-dom';
+
+export const RejoignezNous = () => {
   return (
-    <section className="py-20 bg-blue-600">
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold mb-8 text-white">
-          Rejoignez notre association
+    <section className="bg-blue-900 text-white py-20 px-6 text-center">
+      <div className="max-w-3xl mx-auto">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          👥 Rejoignez-nous !
         </h2>
-        <p className="text-xl text-blue-100 mb-12 max-w-2xl mx-auto">
-          Ensemble, construisons un avenir meilleur pour la jeunesse de Yaokro.
-          Devenez membre de notre association et participez à nos actions.
+        <p className="text-lg md:text-xl mb-8">
+          Envie de faire partie de l'AEEY ? Rejoignez notre communauté d'élèves
+          et d'étudiants engagés.
         </p>
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition duration-300 font-bold">
-            Devenir membre
-          </button>
-          <button className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-            En savoir plus
-          </button>
+        <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <Link
+            to="/inscription"
+            className="bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
+          >
+            S'inscrire
+          </Link>
+          <Link
+            to="/connexion"
+            className="bg-white hover:bg-gray-100 text-blue-900 py-3 px-6 rounded-lg font-semibold transition-colors duration-300"
+          >
+            Se connecter
+          </Link>
         </div>
       </div>
     </section>
   );
-};
-
-export default RejoignezNous; 
+}; 

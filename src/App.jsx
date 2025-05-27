@@ -6,6 +6,8 @@ import { Evenement } from "./pages/Evenement";
 import { Accueil } from "./pages/Accueil";
 import { Don } from "./pages/Don";
 import { Membre } from "./pages/Membre";
+import { Connexion } from "./pages/Connexion";
+import { Inscription } from "./pages/Inscription";
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Accueil />} />
+          <Route path="/connexion" element={<Connexion />} />
+          <Route path="/inscription" element={<Inscription />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/don" element={<Don />} />
           <Route path="/evenement" element={<Evenement />} />
