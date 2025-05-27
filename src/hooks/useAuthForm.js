@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authService } from '../services/authService';
 
 const useAuthForm = (isLogin = true) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     ...(isLogin ? {} : {
-      name: '',
+      firstName: '',
+      lastName: '',
       confirmPassword: '',
       role: 'invite'
     })
@@ -33,14 +37,14 @@ const useAuthForm = (isLogin = true) => {
 
     // Validations supplémentaires pour l'inscription
     if (!isLogin) {
-      if (!formData.name) {
-        newErrors.name = "Le nom est requis";
+      if (!formData.firstName) {
+        newErrors.firstName = "Le prénom est requis";
+      }
+      if (!formData.lastName) {
+        newErrors.lastName = "Le nom est requis";
       }
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = "Les mots de passe ne correspondent pas";
-      }
-      if (!formData.role) {
-        newErrors.role = "Le rôle est requis";
       }
     }
 
@@ -72,18 +76,20 @@ const useAuthForm = (isLogin = true) => {
 
     setLoading(true);
     try {
-      // TODO: Implémenter l'appel API
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      console.log(`Envoi des données vers ${endpoint}:`, formData);
+      // Pour la connexion, on n'envoie que email et password
+      const loginData = {
+        email: formData.email,
+        password: formData.password
+      };
       
-      // Simuler un délai d'API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const response = await authService.login(loginData);
       
-      // TODO: Gérer la réponse de l'API
+      // Redirection après connexion réussie
+      navigate('/profil');
       
     } catch (error) {
       setErrors({
-        general: "Une erreur est survenue. Veuillez réessayer."
+        general: error.message || "Une erreur est survenue. Veuillez réessayer."
       });
     } finally {
       setLoading(false);
@@ -99,17 +105,16 @@ const useAuthForm = (isLogin = true) => {
 
     setLoading(true);
     try {
-      // TODO: Implémenter l'appel API d'inscription
-      console.log('Envoi des données d\'inscription:', formData);
+      // Pour l'inscription, on envoie toutes les données sauf confirmPassword
+      const { confirmPassword, ...registerData } = formData;
+      const response = await authService.register(registerData);
       
-      // Simuler un délai d'API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // TODO: Gérer la réponse de l'API et la redirection
+      // Redirection après inscription réussie
+      navigate('/profil');
       
     } catch (error) {
       setErrors({
-        general: "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
+        general: error.message || "Une erreur est survenue lors de l'inscription. Veuillez réessayer."
       });
     } finally {
       setLoading(false);

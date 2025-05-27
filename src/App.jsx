@@ -9,10 +9,17 @@ import { Membre } from "./pages/Membre";
 import { Connexion } from "./pages/Connexion";
 import { Inscription } from "./pages/Inscription";
 
+const routerConfig = {
+  future: {
+    v7_startTransition: true,
+    v7_relativeSplatPath: true
+  }
+};
+
 function App() {
   return (
     <>
-      <Router>
+      <Router {...routerConfig}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Accueil />} />

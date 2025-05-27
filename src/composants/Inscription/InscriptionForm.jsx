@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import useAuthForm from '../../hooks/useAuthForm';
@@ -14,18 +14,6 @@ export const InscriptionForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  useEffect(() => {
-    // Répète automatiquement le mot de passe
-    if (formData.password && !formData.confirmPassword) {
-      handleChange({
-        target: {
-          name: "confirmPassword",
-          value: formData.password,
-        },
-      });
-    }
-  }, [formData.password]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -51,18 +39,33 @@ export const InscriptionForm = () => {
 
           <div className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-gray-700 font-medium mb-2">
+              <label htmlFor="firstName" className="block text-gray-700 font-medium mb-2">
+                Prénom
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="Entrez votre prénom"
+                className="appearance-none relative block w-full px-4 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm"
+              />
+              {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-gray-700 font-medium mb-2">
                 Nom
               </label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="lastName"
+                value={formData.lastName}
                 onChange={handleChange}
                 placeholder="Entrez votre nom"
                 className="appearance-none relative block w-full px-4 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm"
               />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName}</p>}
             </div>
 
             <div>
@@ -128,7 +131,7 @@ export const InscriptionForm = () => {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="role" className="block text-gray-700 font-medium mb-2">
                 Rôle
               </label>
@@ -143,7 +146,7 @@ export const InscriptionForm = () => {
                 <option value="member">Membre</option>
               </select>
               {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
-            </div>
+            </div> */}
           </div>
 
           <div>
