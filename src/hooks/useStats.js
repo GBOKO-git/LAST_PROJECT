@@ -14,9 +14,9 @@ export default function useStats() {
     const fetchStats = async () => {
       try {
         const [donsRes, cotiRes, depRes] = await Promise.all([
-          axios.get("/api/don"),
-          axios.get("/api/cotisation"),
-          axios.get("/api/depense"),
+          axios.get("/don"),
+          axios.get("/cotisation"),
+          axios.get("/depense"),
         ]);
 
         const dons = donsRes.data?.reduce?.((sum, d) => sum + d.amount, 0) || 0;

@@ -1,7 +1,7 @@
 export const InviteProfil = () => {
   return (
     <>
-      <body className="bg-gradient-to-r from-indigo-800 to-blue-900 min-h-screen flex items-center justify-center p-4">
+      <body className="bg-gradient-to-r  min-h-screen flex items-center justify-center p-4">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full overflow-hidden transition-all duration-300 hover:shadow-indigo-500/50 dark:hover:shadow-blue-900/50">
           <div className="relative h-32 bg-gradient-to-r from-indigo-600 to-blue-700">
             <img

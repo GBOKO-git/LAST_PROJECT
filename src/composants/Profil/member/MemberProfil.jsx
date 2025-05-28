@@ -1,24 +1,26 @@
-import ValidateMembers from "@/components/admin/validateMembers/ValidateMember";
+// import ValidateMembers from "@/components/admin/validateMembers/ValidateMember";
 // import ValidateMembers from "@/components/Admin/validateMembers";
-import Chat from "@/components/Chat/Chat";
-import Deconnexion from "@/components/Déconnexion/Deconnexion";
+// import Chat from "@/components/Chat/Chat";
+// import Deconnexion from "@/components/Déconnexion/Deconnexion";
 // import Loading from "@/components/Loading/loadingButton";
 // import Dashboard from "@/components/MaCotisation/Dashboard";
-import MaCotisation from "@/components/MaCotisation/MaCotisation";
-import MesEvenements from "@/components/MesEvenements/MesEvenements";
-import MesProjets from "@/components/MesProjets/MesProjets";
-import MonCursus from "@/components/MonCursus/MonCursus";
-import MonProfile from "@/components/MonProfile/MonProfile";
-import Sidebar from "@/components/Sidebar/Sidebar";
-import { useAuthGuard } from "@/hooks/useAuthCard";
+// import MaCotisation from "@/components/MaCotisation/MaCotisation";
+// import MesEvenements from "@/components/MesEvenements/MesEvenements";
+// import MesProjets from "@/components/MesProjets/MesProjets";
+// import MonCursus from "@/components/MonCursus/MonCursus";
+// import MonProfile from "@/components/MonProfile/MonProfile";
+// import Sidebar from "@/components/Sidebar/Sidebar";
+// import { useAuthGuard } from "@/hooks/useAuthCard";
 import { Menu, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAuthGuard } from "../../../hooks/useAuthCard";
+import { useRoutes } from "react-router-dom";
 
 export const MemberProfil = () => {
   const [activeComp, setActiveComp] = useState("Profile");
   const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+  const router = useRoutes();
   useAuthGuard();
 
  
@@ -28,36 +30,36 @@ export const MemberProfil = () => {
     }
   }, [activeComp]);
   
-  const sidebarContent = () => {
-    switch (activeComp) {
-      case "Profil":
-        return <MonProfile />;
+  // const sidebarContent = () => {
+  //   switch (activeComp) {
+  //     case "Profil":
+  //       return <MonProfile />;
 
-        case "Validation":
-        return <ValidateMembers />;
+  //       case "Validation":
+  //       return <ValidateMembers />;
 
-      case "Cursus":
-        return <MonCursus />;
+  //     case "Cursus":
+  //       return <MonCursus />;
 
-      case "Cotisation":
-        return <MaCotisation />;
+  //     case "Cotisation":
+  //       return <MaCotisation />;
 
-      case "Chat":
-        return <Chat />;
+  //     case "Chat":
+  //       return <Chat />;
 
-      case "Projets":
-        return <MesProjets />;
+  //     case "Projets":
+  //       return <MesProjets />;
 
-      case "Evènement":
-        return <MesEvenements />;
+  //     case "Evènement":
+  //       return <MesEvenements />;
 
-      case "Déconnexion":
-        return <Deconnexion />;
+  //     case "Déconnexion":
+  //       return <Deconnexion />;
 
-      default:
-        return <MonProfile />;
-    }
-  };
+  //     default:
+  //       return <MonProfile />;
+  //   }
+  // };
 
   
   return (
@@ -91,4 +93,3 @@ export const MemberProfil = () => {
   );
 };
 
-e

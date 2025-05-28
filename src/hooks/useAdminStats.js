@@ -8,7 +8,7 @@ const useAdminStats = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await axios.get("/api/admin/stats");
+        const res = await axios.get("/admin/stats");
         setStats(res.data);
       } catch (err) {
         console.error("Erreur lors de la récupération des stats :", err);

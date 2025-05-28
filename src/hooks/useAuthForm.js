@@ -96,9 +96,9 @@ const useAuthForm = (isLogin = true) => {
 
     // ✅ Redirection selon le rôle et validation
     if (role === "admin" || (role === "member" && isValidated)) {
-      navigate("/profil");
+      navigate("/Profile");
     } else {
-      navigate("/profilrestreint");
+      navigate("/ProfilRestreint");
     }
 
   } catch (error) {

@@ -1,8 +1,9 @@
+import { MemberProfil } from "../composants/Profil/member/MemberProfil"
 
-export const Profil = () => {
+export const Profile = () => {
   return (
     <>
-    
+      <MemberProfil/>
     </>
   )
 }
