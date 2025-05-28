@@ -33,8 +33,8 @@ const useAuthForm = (isLogin = true) => {
       newErrors.password = "Le mot de passe est requis";
     } else if (formData.password.length < 8) {
       newErrors.password = "Le mot de passe doit contenir au moins 8 caractères";
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/.test(formData.password)) {
-      newErrors.password = "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial";
+    } else if (!/(?=.*\d)(?=.*[A-Z])/.test(formData.password)) {
+      newErrors.password = "Le mot de passe doit contenir au moins une majuscule, et un chiffre ";
     }
 
     // Validations supplémentaires pour l'inscription
