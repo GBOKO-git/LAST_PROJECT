@@ -9,12 +9,16 @@ import { Membre } from "./pages/Membre";
 import { Connexion } from "./pages/Connexion";
 import { Inscription } from "./pages/Inscription";
 import { ProfilRestreint } from "./pages/ProfilRestreint";
+import { DashboardPage } from "./pages/Dashboard";
+import { ValidateMembers } from "./pages/validateMembers";
+import AuthGuard from "./components/auth/AuthGuard";
+import Espacedonateur from "./pages/Espacedonateur";
 
 const routerConfig = {
   future: {
     v7_startTransition: true,
-    v7_relativeSplatPath: true
-  }
+    v7_relativeSplatPath: true,
+  },
 };
 
 function App() {
@@ -26,11 +30,70 @@ function App() {
           <Route path="/" element={<Accueil />} />
           <Route path="/connexion" element={<Connexion />} />
           <Route path="/inscription" element={<Inscription />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/don" element={<Don />} />
-          <Route path="/evenement" element={<Evenement />} />
-          <Route path="/membre" element={<Membre />} />
-          <Route path="/profilRestreint" element={<ProfilRestreint />} />
+          <Route
+            path="/profile/*"
+            element={
+              <AuthGuard>
+                <Profile />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/don"
+            element={
+              <AuthGuard>
+                <Don />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <AuthGuard requiredRole="admin">
+                <DashboardPage />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/evenement"
+            element={
+              <AuthGuard>
+                <Evenement />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/membre"
+            element={
+              <AuthGuard>
+                <Membre />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/profilRestreint"
+            element={
+              <AuthGuard>
+                <ProfilRestreint />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/validateMembers"
+            element={
+              <AuthGuard requiredRole="admin">
+                <ValidateMembers />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/espacedonateur"
+            element={
+              <AuthGuard>
+                <Espacedonateur />
+              </AuthGuard>
+            }
+          />
         </Routes>
       </Router>
     </>

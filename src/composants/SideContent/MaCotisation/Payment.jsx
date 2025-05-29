@@ -1,6 +1,6 @@
-const { default: PaymentMethod } = require("../donation/PaymentMethod")
+// const { default: PaymentMethod } = require("../donation/PaymentMethod")
 
-const Payments = () => {
+export const Payments = () => {
 return (
     <>
         <PaymentMethod/>
@@ -8,4 +8,3 @@ return (
 )
 
 }
-export default Payments;

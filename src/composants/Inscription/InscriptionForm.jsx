@@ -131,7 +131,7 @@ export const InscriptionForm = () => {
               )}
             </div>
 
-            {/* <div>
+            <div>
               <label htmlFor="role" className="block text-gray-700 font-medium mb-2">
                 Rôle
               </label>
@@ -141,12 +141,12 @@ export const InscriptionForm = () => {
                 onChange={handleChange}
                 className="appearance-none relative block w-full px-4 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 sm:text-sm"
               >
-                <option value="invite">Invité</option>
-                <option value="donor">Donateur</option>
+                <option value="user">Utilisateur</option>
+                <option value="donateur">Donateur</option>
                 <option value="member">Membre</option>
               </select>
               {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
-            </div> */}
+            </div>
           </div>
 
           <div>

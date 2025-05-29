@@ -1,5 +1,4 @@
-
-const ProjectList = () => {
+export const ProjectList = () => {
     
   return (
     <>
@@ -77,4 +76,3 @@ const ProjectList = () => {
     </>
   );
 };
- export default ProjectList;

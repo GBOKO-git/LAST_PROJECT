@@ -2,7 +2,7 @@
 import { GiBank, GiFilmProjector } from "react-icons/gi";
 import { FcApproval } from "react-icons/fc";
 import {
-  HiChatAlt2,
+  // HiChatAlt2,
   HiOutlineLogout,
   HiUser,
   HiCalendar,
@@ -11,7 +11,7 @@ import {
 import { MdOutlineDashboard } from "react-icons/md";
 
 const menuItems = [
-  { label: "Chat", icon: HiChatAlt2 },
+  // { label: "Chat", icon: HiChatAlt2 },
   { label: "Validation", icon: FcApproval },
   { label: "Cursus", icon: HiAcademicCap },
   { label: "Profil", icon: HiUser },
@@ -22,7 +22,7 @@ const menuItems = [
   { label: "Déconnexion", icon: HiOutlineLogout },
 ];
 
-const Sidebar = ({ setActiveComp, activeComp }) => {
+export const Sidebar = ({ setActiveComp, activeComp }) => {
   return (
     <aside className="w-40 md:w-64 md:h-full min-h-screen bg-gray-800 md:text-white flex flex-col ">
       <div className="md:p-4 md:text-xl font-serif border-b border-gray-700">
@@ -57,4 +57,3 @@ const Sidebar = ({ setActiveComp, activeComp }) => {
   );
 };
 
-export default Sidebar;

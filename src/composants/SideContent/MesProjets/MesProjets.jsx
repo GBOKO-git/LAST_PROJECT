@@ -1,4 +1,4 @@
-const MesProjets = () => {
+export  const MesProjets = () => {
   return (
     <>
       <section className="bg-blue-950/80 min-h-screen py-10 h-full flex items-center text-white px-4 md:px-10 lg:px-20">
@@ -140,4 +140,3 @@ const MesProjets = () => {
   );
 };
 
-export default MesProjets;

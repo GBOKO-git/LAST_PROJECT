@@ -1,133 +1,115 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+import { API_CONFIG, buildApiUrl, getDefaultHeaders, handleApiError } from './api.config';
 
-const parseJwt = (token) => {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch (e) {
-    return null;
-  }
-};
-
-export const authService = {
-  register: async (userData) => {
+class AuthService {
+  async login(loginData) {
     try {
-      console.log('Tentative d\'inscription avec:', userData);
-      console.log('URL de l\'API:', `${API_URL}/User/register`);
-      
-      const response = await fetch(`${API_URL}/User/register`, {
+      const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.LOGIN), {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
+        headers: getDefaultHeaders(),
+        body: JSON.stringify(loginData)
       });
 
-      console.log('Statut de la réponse:', response.status);
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Erreur lors de l\'inscription');
-      }
-
-      const data = await response.json();
+      const data = await handleApiError(response);
       console.log('Réponse du serveur:', data);
-      
+
+      // Stocker le token
       if (data.token) {
         localStorage.setItem('token', data.token);
-        // Stocker la date d'expiration
-        const decodedToken = parseJwt(data.token);
-        if (decodedToken && decodedToken.exp) {
-          localStorage.setItem('tokenExpiration', decodedToken.exp * 1000);
-        }
       }
-      return data;
-    } catch (error) {
-      console.error('Erreur détaillée:', error);
-      throw new Error(error.message || 'Erreur lors de l\'inscription');
-    }
-  },
 
-  login: async (credentials) => {
-    try {
-      console.log('Tentative de connexion avec:', credentials);
-      console.log('URL de l\'API:', `${API_URL}/User/login`);
-      
-      const loginData = {
-        email: credentials.email,
-        password: credentials.password
+      // S'assurer que toutes les propriétés de l'utilisateur sont présentes
+      const user = data.user || data; // Le serveur peut renvoyer directement l'utilisateur ou dans un objet user
+      console.log('Données utilisateur reçues:', user);
+
+      const processedUser = {
+        ...user,
+        role: user.role || 'invite',
+        estValide: user.estValide === true,
+        isAdmin: user.isAdmin === true || user.role === 'admin',
+        isSuperAdmin: user.isSuperAdmin === true
       };
 
-      const response = await fetch(`${API_URL}/User/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginData),
+      console.log('Données utilisateur traitées:', processedUser);
+      return processedUser;
+    } catch (error) {
+      console.error('Erreur de connexion:', error);
+      throw error;
+    }
+  }
+
+  async register(registerData) {
+    const transformedData = {
+      nom: registerData.lastName,
+      prenom: registerData.firstName,
+      email: registerData.email,
+      password: registerData.password,
+      role: registerData.role === 'member' ? 'member' : 'user'
+    };
+
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.REGISTER), {
+      method: 'POST',
+      headers: getDefaultHeaders(),
+      body: JSON.stringify(transformedData)
+    });
+
+    const data = await handleApiError(response);
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+    }
+    return data;
+  }
+
+  async updateProfile(profileData) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Non authentifié');
+    }
+
+    const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.PROFILE), {
+      method: 'PUT',
+      headers: getDefaultHeaders(token),
+      body: JSON.stringify(profileData)
+    });
+
+    return handleApiError(response);
+  }
+
+  async getCurrentUser() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.PROFILE), {
+        headers: getDefaultHeaders(token)
       });
 
-      console.log('Statut de la réponse:', response.status);
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || 'Erreur lors de la connexion');
-      }
+      const data = await handleApiError(response);
+      console.log('Données utilisateur courantes:', data);
 
-      const data = await response.json();
-      console.log('Réponse du serveur:', data);
-      
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-        // Stocker la date d'expiration
-        const decodedToken = parseJwt(data.token);
-        if (decodedToken && decodedToken.exp) {
-          localStorage.setItem('tokenExpiration', decodedToken.exp * 1000);
-        }
-      }
-      return data;
+      // Traiter la réponse de la même manière que login
+      const user = data.user || data;
+      return {
+        ...user,
+        role: user.role || 'invite',
+        estValide: user.estValide === true,
+        isAdmin: user.isAdmin === true || user.role === 'admin',
+        isSuperAdmin: user.isSuperAdmin === true
+      };
     } catch (error) {
-      console.error('Erreur détaillée:', error);
-      throw new Error(error.message || 'Erreur lors de la connexion');
-    }
-  },
-
-  logout: () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
-  },
-
-  isAuthenticated: () => {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    // Vérifier l'expiration du token
-    const expiration = localStorage.getItem('tokenExpiration');
-    if (expiration) {
-      const expirationDate = new Date(parseInt(expiration));
-      if (expirationDate <= new Date()) {
-        // Token expiré, déconnexion
-        authService.logout();
-        return false;
+      console.error('Erreur lors de la récupération du profil:', error);
+      // Si le token est invalide, le supprimer
+      if (error.message === 'Token invalide ou expiré') {
+        this.logout();
       }
+      throw error;
     }
-
-    return true;
-  },
-
-  getToken: () => {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-
-    // Vérifier l'expiration du token
-    const expiration = localStorage.getItem('tokenExpiration');
-    if (expiration) {
-      const expirationDate = new Date(parseInt(expiration));
-      if (expirationDate <= new Date()) {
-        // Token expiré, déconnexion
-        authService.logout();
-        return null;
-      }
-    }
-
-    return token;
   }
-}; 
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+}
+
+export const authService = new AuthService(); 

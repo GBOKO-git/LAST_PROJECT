@@ -1,4 +1,4 @@
-const History = () => {
+export const History = () => {
   return (
     <>
       <div className="grid   gap-4 p-4">
@@ -54,5 +54,3 @@ const History = () => {
     </>
   );
 };
-
-export default History;

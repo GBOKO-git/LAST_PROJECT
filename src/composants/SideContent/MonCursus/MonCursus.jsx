@@ -1,4 +1,3 @@
-"use client";
 const todos = [
   {
     title: "ok",
@@ -14,7 +13,6 @@ const todos = [
   },
 ];
 
-import Link from "next/link";
 // import { useEffect, useState } from "react";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { CiEdit } from "react-icons/ci";

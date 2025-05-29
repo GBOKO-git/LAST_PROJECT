@@ -6,10 +6,9 @@ import { IoLogoPaypal } from "react-icons/io5";
 // import { usePaymentMethod } from "@/hooks/usePaymentMethod";
 // import PayPalButton from "../paypal/PaypalButton";
 
-const PaymentMethod = ({ amount, type }) => {
+const PaymentMethod = ({ amount, type, donorInfo }) => {
   const [active, setActive] = useState(type || "bank");
-
-  const { handleStripeCheckout, handleCinetPay } = usePaymentMethod(active);
+  const { handleStripeCheckout, handlePayPalPayment, handleCinetPay } = usePaymentMethod();
 
   // Mettre à jour le bouton actif quand `type` change
   useEffect(() => {
@@ -80,7 +79,7 @@ const PaymentMethod = ({ amount, type }) => {
         {/* Affichage conditionnel selon la méthode */}
         {active === "bank" && (
           <button
-            onClick={() => handleStripeCheckout(amount)}
+            onClick={() => handleStripeCheckout(amount, type, donorInfo)}
             className="bg-green-600 text-white p-2 rounded mt-4"
             disabled={!amount}
           >
@@ -90,13 +89,26 @@ const PaymentMethod = ({ amount, type }) => {
 
         {active === "paypal" && (
           <div>
-            <PayPalButton amount={amount?.toFixed(2)} currency="EUR" />
+            <PayPalButton 
+              amount={amount?.toFixed(2)} 
+              currency="EUR"
+              onSuccess={async (details) => {
+                try {
+                  const transactionId = await handlePayPalPayment(amount, type, donorInfo);
+                  // Gérer le succès du paiement PayPal
+                  console.log('PayPal payment completed:', details);
+                } catch (error) {
+                  console.error('PayPal payment error:', error);
+                  alert('Erreur lors du paiement PayPal: ' + error.message);
+                }
+              }}
+            />
           </div>
         )}
 
         {active === "mobile" && (
           <button
-            onClick={() => handleCinetPay(amount)}
+            onClick={() => handleCinetPay(amount, type, donorInfo)}
             className="bg-green-600 text-white p-2 rounded mt-4"
             disabled={!amount}
           >

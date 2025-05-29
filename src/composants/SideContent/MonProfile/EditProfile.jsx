@@ -1,4 +1,4 @@
-const EditProfile = () => {
+export const EditProfile = () => {
   return (
     <>
       <div className="bg-gradient-to-br from-cyan-50 to-cyan-100 min-h-screen flex items-center justify-center p-4">
@@ -229,4 +229,3 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;

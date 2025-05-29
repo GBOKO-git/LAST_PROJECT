@@ -13,7 +13,7 @@ const useAuthForm = (isLogin = true) => {
           firstName: "",
           lastName: "",
           confirmPassword: "",
-          role: "invite",
+          role: "user",
         }),
   });
 
@@ -74,43 +74,59 @@ const useAuthForm = (isLogin = true) => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!validateForm()) {
-    return;
-  }
-
-  setLoading(true);
-  try {
-    const loginData = {
-      email: formData.email,
-      password: formData.password,
-    };
-
-    const response = await authService.login(loginData);
-
-    // Message de succès
-    setErrors({});
-
-    const { role, isValidated } = response;
-
-    // ✅ Redirection selon le rôle et validation
-    if (role === "admin" || (role === "member" && isValidated)) {
-      navigate("/Profile");
-    } else {
-      navigate("/ProfilRestreint");
+    if (!validateForm()) {
+      return;
     }
 
-  } catch (error) {
-    setErrors({
-      general:
-        error.message || "Une erreur est survenue. Veuillez réessayer.",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    try {
+      const loginData = {
+        email: formData.email,
+        password: formData.password,
+      };
 
+      const response = await authService.login(loginData);
+      console.log('Réponse de connexion:', response); // Log de débogage
+
+      // Message de succès
+      setErrors({});
+
+      // Récupérer l'URL de redirection stockée
+      const redirectUrl = localStorage.getItem("redirectAfterLogin");
+      localStorage.removeItem("redirectAfterLogin"); // Nettoyer après utilisation
+
+      // Vérification détaillée des rôles et permissions
+      console.log('Vérification des permissions:', { // Log de débogage
+        isAdmin: response.isAdmin,
+        isSuperAdmin: response.isSuperAdmin,
+        role: response.role,
+        estValide: response.estValide
+      });
+
+      // Redirection selon le rôle et la validation
+      if (response.isAdmin === true || response.isSuperAdmin === true || response.role === 'admin') {
+        console.log('Redirection vers le dashboard'); // Log de débogage
+        navigate("/dashboard");
+      } else if (response.role === "member" && response.estValide === true) {
+        console.log('Redirection vers le profil membre'); // Log de débogage
+        navigate(redirectUrl || "/profile");
+      } else {
+        console.log('Redirection vers le profil restreint'); // Log de débogage
+        navigate("/profilRestreint");
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la connexion:', error); // Log de débogage
+      setErrors({
+        general:
+          error.message || "Une erreur est survenue. Veuillez réessayer.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
@@ -128,7 +144,7 @@ const useAuthForm = (isLogin = true) => {
       setErrors({});
 
       // Redirection après inscription réussie
-      navigate("/profil");
+      navigate("/connexion");
     } catch (error) {
       setErrors({
         general:

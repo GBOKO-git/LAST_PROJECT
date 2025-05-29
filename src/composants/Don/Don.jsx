@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 const cotisation = [
   { amount: 50, money: "€" },
@@ -13,16 +13,10 @@ const donation = [
   { amount: 80, money: "€" },
 ];
 
-export default function NavigationDivs({
-  // setActiveAddress,
-  setSelectAmount,
-  setPaymentType,
-  onNext
-}) {
+function Don({ setActiveAddress, setSelectAmount, setPaymentType }) {
   const [activeDiv, setActiveDiv] = useState("div1");
   const [customAmount, setCustomAmount] = useState("");
   const [selectedAmount, setSelectedAmount] = useState(null);
-  const [isAnonymous, setIsAnonymous] = useState(false);
 
   const handleCustomAmount = (value) => {
     setCustomAmount(value);
@@ -37,36 +31,28 @@ export default function NavigationDivs({
   };
 
   const handleSwitchToDon = () => {
+    setActiveAddress(true);
     setActiveDiv("div1");
     setPaymentType("don");
     setSelectAmount(null);
     setCustomAmount("");
     setSelectedAmount(null);
-    setIsAnonymous(false);
   };
 
   const handleSwitchToCotisation = () => {
     setActiveDiv("div2");
+    setActiveAddress(false);
     setPaymentType("cotisation");
     setSelectAmount(null);
     setSelectedAmount(null);
     setCustomAmount("");
-    setIsAnonymous(false);
-  };
-
-  const handleNext = () => {
-    if (selectedAmount) {
-      onNext(isAnonymous);
-    } else {
-      alert("Veuillez sélectionner un montant");
-    }
   };
 
   return (
     <div className="dark:text-black">
       <div className="w-full md:max-w-3xl mx-auto p-8">
         <h2 className="text-2xl text-center font-semibold h-10 rounded-t-lg bg-blue-500 text-white">
-          {activeDiv === "div1" ? "Faire un don" : "Payer ma cotisation"}
+          Mon Don
         </h2>
 
         <div className="bg-white/90 dark:bg-gray-800 p-8 rounded-b-lg shadow-md border dark:border-gray-700">
@@ -80,7 +66,7 @@ export default function NavigationDivs({
                   : "bg-slate-50/10 border border-purple-950 text-black dark:text-white"
               }`}
             >
-              Faire un don
+              faire un don
             </button>
             <button
               onClick={handleSwitchToCotisation}
@@ -105,11 +91,7 @@ export default function NavigationDivs({
                       setSelectAmount(item.amount);
                       setSelectedAmount(item.amount);
                     }}
-                    className={`border text-center p-4 rounded flex justify-center items-center transition-colors ${
-                      selectedAmount === item.amount
-                        ? "bg-purple-100 border-purple-500"
-                        : "bg-gray-100 hover:bg-gray-200"
-                    }`}
+                    className="border text-center bg-gray-100 p-4 rounded flex justify-center items-center hover:bg-gray-200"
                   >
                     <p>{item.amount}</p>&nbsp;<span>{item.money}</span>
                   </button>
@@ -148,11 +130,6 @@ export default function NavigationDivs({
                   )}
                 </p>
               </div>
-              <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 text-sm text-yellow-700">
-                <p>
-                  Note : Les informations personnelles sont requises pour les cotisations afin de suivre votre adhésion à l'association.
-                </p>
-              </div>
             </div>
           )}
 
@@ -168,11 +145,7 @@ export default function NavigationDivs({
                         setSelectAmount(item.amount);
                         setSelectedAmount(item.amount);
                       }}
-                      className={`border text-center p-4 rounded flex justify-center items-center transition-colors ${
-                        selectedAmount === item.amount
-                          ? "bg-purple-100 border-purple-500"
-                          : "bg-gray-100 hover:bg-gray-200"
-                      }`}
+                      className="border text-center bg-gray-100 p-4 rounded flex justify-center items-center hover:bg-gray-200"
                     >
                       <p>{item.amount}</p>&nbsp;<span>{item.money}</span>
                     </button>
@@ -190,18 +163,6 @@ export default function NavigationDivs({
                     €
                   </li>
                 </ul>
-                <div className="flex items-center space-x-2 bg-gray-200 p-4 rounded">
-                  <input
-                    type="checkbox"
-                    id="anonymous"
-                    checked={isAnonymous}
-                    onChange={(e) => setIsAnonymous(e.target.checked)}
-                    className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
-                  />
-                  <label htmlFor="anonymous" className="text-sm text-gray-700">
-                    Je souhaite faire un don anonyme
-                  </label>
-                </div>
                 <p className="bg-blue-600 rounded text-justify text-white p-2">
                   {selectedAmount ? (
                     <>
@@ -223,20 +184,10 @@ export default function NavigationDivs({
               </div>
             </div>
           )}
-
-          {/* Bouton Suivant */}
-          {selectedAmount > 0 && (
-            <div className="flex justify-end mt-6">
-              <button
-                onClick={handleNext}
-                className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
-              >
-                Suivant
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
+
+export default Don; 

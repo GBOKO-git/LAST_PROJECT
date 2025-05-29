@@ -1,11 +1,11 @@
-"use client";
 import { useState } from "react";
-import EditProfile from "./EditProfile";
-import ProjectList from "./ProjectList";
+// import EditProfile from "./EditProfile";
+// import ProjectList from "./ProjectList";
 import { MdEmail, MdPhoneIphone } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
-import Loading from "../Loading/loadingButton";
-import { useUser } from "@/hooks/useUser";
+import Loading from "../../Loading/LoadingButton";
+import { useUser } from "../../../hooks/useUser";
+import { EditProfile } from "./EditProfile";
 
 const MonProfile = () => {
   const [activeComponent, setActiveComponent] = useState("projectList");
