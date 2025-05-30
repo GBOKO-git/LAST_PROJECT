@@ -66,7 +66,7 @@ export const EspaceDonateur = () => {
     <div className="bg-gray-100 font-sans min-h-screen flex flex-col md:flex-row">
       {/* Sidebar */}
       <aside
-        className={`bg-white shadow-lg transition-all duration-300 ease-in-out fixed md:static inset-y-0 left-0 z-50 ${
+        className={`bg-white shadow-lg transition-all duration-300 ease-in-out fixed md:static inset-y-0 left-0 z-50 mt-5 ${
           openSidebar ? "w-64" : "w-20 md:w-64"
         } ${!openSidebar && "hidden md:block"}`}
       >

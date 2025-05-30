@@ -1,16 +1,16 @@
 // Configuration de base de l'API
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:5000/api',
+  BASE_URL: import.meta.env.VITE_API_URL ,
   ENDPOINTS: {
     AUTH: {
-      LOGIN: '/auth/login',
-      REGISTER: '/auth/register',
-      PROFILE: '/auth/profile'
+      LOGIN: '/api/auth/login',
+      REGISTER: '/api/auth/register',
+      PROFILE: '/api/auth/profile'
     },
-    USERS: '/auth',
-    EVENTS: '/events',
-    TRANSACTIONS: '/transactions',
-    PAYMENTS: '/payments'
+    USERS: '/api/auth',
+    EVENTS: '/api/events',
+    TRANSACTIONS: '/api/transactions',
+    PAYMENTS: '/api/payments'
   }
 };
 

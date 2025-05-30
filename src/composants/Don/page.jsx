@@ -64,7 +64,7 @@ export default function NavigationDivs({
 
   return (
     <div className="dark:text-black">
-      <div className="w-full md:max-w-3xl mx-auto md:p-8">
+      <div className="w-full md:max-w-3xl mx-auto ">
         <h2 className="text-2xl text-center font-semibold h-10 rounded-t-lg bg-blue-500 text-white">
           {activeDiv === "div1" ? "Faire un don" : "Payer ma cotisation"}
         </h2>
@@ -84,7 +84,7 @@ export default function NavigationDivs({
             </button>
             <button
               onClick={handleSwitchToCotisation}
-              className={`px-4 md:py-3 rounded-r uppercase ${
+              className={`px-4 md:py-3 rounded-r sm:uppercase ${
                 activeDiv === "div2"
                   ? "bg-purple-500 text-white hover:bg-purple-600"
                   : "bg-slate-50/10 border border-purple-950 text-black dark:text-white"

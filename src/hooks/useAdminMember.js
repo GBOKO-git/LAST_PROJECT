@@ -23,11 +23,11 @@ export const useAdminMembers = () => {
         const profileData = await handleApiError(profileResponse);
 
         const user = profileData?.user;
-        console.log("--- DEBUG useAdminMembers ---");
-        console.log("User object from backend:", user);
-        console.log("user.isAdmin:", user?.isAdmin);
-        console.log("user.isSuperAdmin:", user?.isSuperAdmin);
-        console.log("--- FIN DEBUG ---");
+        // console.log("--- DEBUG useAdminMembers ---");
+        // console.log("User object from backend:", user);
+        // console.log("user.isAdmin:", user?.isAdmin);
+        // console.log("user.isSuperAdmin:", user?.isSuperAdmin);
+        // console.log("--- FIN DEBUG ---");
 
         if (!user || (!user.isAdmin && !user.isSuperAdmin)) {
           setUnauthorized(true);
