@@ -16,7 +16,7 @@ const PaymentMethod = ({ amount, type, donorInfo }) => {
   }, [type]);
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-8">
+    <div className="w-full max-w-3xl mx-auto md:p-8">
       <h2 className="text-2xl text-center font-semibold h-10 rounded-t-lg bg-blue-600 text-white">
         MÉTHODES DE PAIEMENT
       </h2>
