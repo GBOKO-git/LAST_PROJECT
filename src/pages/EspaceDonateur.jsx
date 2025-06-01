@@ -3,7 +3,7 @@
 import { EspaceDonateur } from "../composants/EspaceDonateur/Espace";
 // import { Link } from "react-router-dom";
 
-const Espacedonateur = () => {
+export const Espacedonateur = () => {
   //   const [ isOpen, setIsOpen ] = useState(false)
   return (
     <>
@@ -13,4 +13,3 @@ const Espacedonateur = () => {
     </>
   );
 };
-export default Espacedonateur;

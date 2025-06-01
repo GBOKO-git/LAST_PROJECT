@@ -12,7 +12,7 @@ import { ProfilRestreint } from "./pages/ProfilRestreint";
 import { DashboardPage } from "./pages/Dashboard";
 import { ValidateMembers } from "./pages/validateMembers";
 import AuthGuard from "./components/auth/AuthGuard";
-import Espacedonateur from "./pages/Espacedonateur";
+import { Espacedonateur } from "./pages/Espacedonateur";
 import { AddEventForm } from "./pages/AddEventForm";
 
 const routerConfig = {
@@ -39,14 +39,7 @@ function App() {
               </AuthGuard>
             }
           />
-          <Route
-            path="/don"
-            element={
-              <AuthGuard>
-                <Don />
-              </AuthGuard>
-            }
-          />
+          <Route path="/don" element={<Don />} />
           <Route
             path="/dashboard"
             element={
