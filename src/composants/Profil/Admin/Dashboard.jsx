@@ -64,11 +64,11 @@ export const Dashboard = () => {
             Admin<span className="text-indigo-800">Panel</span>
           </div>
           <div className="flex items-center space-x-2">
-            {/* <img
+            <img
               className="w-10 h-10 rounded-full object-cover"
               src="https://i.pinimg.com/564x/de/0f/3d/de0f3d06d2c6dbf29a888cf78e4c0323.jpg"
               alt="Profile"
-            /> */}
+            />
             <i>A.E.E.Y</i>
           </div>
         </div>
