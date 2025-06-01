@@ -4,7 +4,7 @@ import { FaUsers, FaUserSecret } from "react-icons/fa";
 
 export const Hero = () => {
   return (
-    <div className="relative min-h-screen w-screen box-border bg-gradient-to-b from-green-700 to-green-900 bg-[url('./images/aeey.jpeg')] bg-no-repeat bg-cover bg-center overflow-hidden">
+    <div className="relative min-h-screen w-screen box-border 0 bg-[url('./images/aeey.jpeg')] bg-no-repeat bg-cover bg-start overflow-hidden">
       <section className="relative bg-black/60 z-10 flex items-center justify-center min-h-screen text-center">
         <div className="max-w-3xl px-4">
           <h1 className="sm:text-4xl text-3xl mb-6 font-bold text-yellow-400 drop-shadow-lg">
@@ -45,7 +45,7 @@ export const Hero = () => {
             solidarité et l'engagement.
           </p>
           <a
-            href="/evenements"
+            href="/evenement"
             className="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
           >
             Découvrir les événements

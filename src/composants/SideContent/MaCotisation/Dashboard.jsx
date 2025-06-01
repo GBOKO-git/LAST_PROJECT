@@ -80,6 +80,7 @@ export default function AdminDashboard() {
             {[
               { icon: <MdDashboard />, label: "Home", link: "/accueil" },
               { icon: <MdOutlineTune />, label: "Configuration", link: "/validateMembers" },
+              { icon: <MdOutlineFileCopy />, label: "Evenement", link: "/addeventform" },
               { icon: <MdOutlineFileCopy />, label: "Documents", link: "/accueil" },
             ].map((item) => (
               <a

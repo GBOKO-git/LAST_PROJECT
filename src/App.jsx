@@ -13,6 +13,7 @@ import { DashboardPage } from "./pages/Dashboard";
 import { ValidateMembers } from "./pages/validateMembers";
 import AuthGuard from "./components/auth/AuthGuard";
 import Espacedonateur from "./pages/Espacedonateur";
+import { AddEventForm } from "./pages/AddEventForm";
 
 const routerConfig = {
   future: {
@@ -91,6 +92,14 @@ function App() {
             element={
               <AuthGuard>
                 <Espacedonateur />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/addeventform"
+            element={
+              <AuthGuard>
+                <AddEventForm />
               </AuthGuard>
             }
           />
