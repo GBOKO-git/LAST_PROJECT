@@ -12,8 +12,8 @@ import { ProfilRestreint } from "./pages/ProfilRestreint";
 import { DashboardPage } from "./pages/Dashboard";
 import { ValidateMembers } from "./pages/validateMembers";
 import AuthGuard from "./components/auth/AuthGuard";
-import { Espacedonateur } from "./pages/Espacedonateur";
 import { AddEventForm } from "./pages/AddEventForm";
+import { MonEspaceDonateur } from "./pages/Espacedonateur";
 
 const routerConfig = {
   future: {
@@ -84,7 +84,7 @@ function App() {
             path="/espacedonateur"
             element={
               <AuthGuard>
-                <Espacedonateur />
+                <MonEspaceDonateur />
               </AuthGuard>
             }
           />
