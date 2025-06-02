@@ -4,7 +4,7 @@ import { FaUsers, FaUserSecret } from "react-icons/fa";
 
 export const Hero = () => {
   return (
-    <div className="relative min-h-screen w-screen box-border 0 bg-[url('./images/aeey.jpeg')] bg-no-repeat bg-cover bg-start overflow-hidden">
+    <div className="relative min-h-screen w-screen box-border  bg-[url('/images/aeey.jpeg')] bg-no-repeat bg-cover bg-start overflow-hidden">
       <section className="relative bg-black/60 z-10 flex items-center justify-center min-h-screen text-center">
         <div className="max-w-3xl px-4">
           <h1 className="sm:text-4xl text-3xl mb-6 font-bold text-yellow-400 drop-shadow-lg">
