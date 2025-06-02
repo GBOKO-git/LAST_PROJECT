@@ -15,6 +15,7 @@ import AuthGuard from "./components/auth/AuthGuard";
 import { AddEventForm } from "./pages/AddEventForm";
 import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
 import { EditProfile } from "./pages/EditProfile";
+import { MembershipRequestPage } from "./pages/Memberrequest";
 // import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
 
 const routerConfig = {
@@ -101,6 +102,10 @@ function App() {
           <Route 
           path="/editprofile"
           element = { <EditProfile/> }
+          />
+          <Route 
+          path="/demandemembre"
+          element = { <MembershipRequestPage/> }
           />
         </Routes>
       </Router>
