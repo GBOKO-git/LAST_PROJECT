@@ -156,10 +156,10 @@ export const Profile = () => {
   }
 
   return (
-    <div className="bg-gray-100 font-sans min-h-screen flex flex-col md:flex-row">
+    <div className="bg-gray-100 font-sans min-h-screen flex flex-col md:flex-row mt-14">
       {/* Sidebar */}
       <aside
-        className={`bg-white shadow-lg transition-all duration-300 ease-in-out fixed md:static inset-y-0 left-0 z-50 ${
+        className={`bg-white shadow-lg transition-all duration-300 ease-in-out fixed md:static inset-y-0 left-0 z-40 ${
           openSidebar ? "w-64" : "w-20 md:w-64"
         } ${!openSidebar && "hidden md:block"}`}
       >
@@ -188,8 +188,8 @@ export const Profile = () => {
                 label: "Mes Informations",
                 icon: <UserIcon />,
               },
-              // { id: "changePassword", label: "Changer mot de passe", icon: <LockIcon />, path: "/change-password" },
-              // { id: "myContributions", label: "Mes Cotisations", icon: <HomeIcon />, path: "/cotisations" },
+               { id: "changePassword", label: "Changer mot de passe", icon: <LockIcon />, path: "/change-password" },
+               { id: "myContributions", label: "Mes Cotisations", icon: <HomeIcon />, path: "/don" },
             ].map((item) => (
               <li key={item.id}>
                 <a
@@ -381,7 +381,7 @@ export const Profile = () => {
                 )}
 
                 {/* Historique des cotisations */}
-                {user.cotisations && user.cotisations.length > 0 && (
+                {user.cotisations && user.cotisations.length >= 0 && (
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
                       Historique des cotisations
@@ -432,7 +432,7 @@ export const Profile = () => {
                 )}
 
                 {/* Historique des dons */}
-                {user.dons && user.dons.length > 0 && (
+                {user.dons && user.dons.length >= 0 && (
                   <div>
                     <h2 className="text-xl font-semibold text-gray-900 mb-4">
                       Historique des dons

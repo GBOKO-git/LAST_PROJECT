@@ -14,6 +14,7 @@ import { ValidateMembers } from "./pages/validateMembers";
 import AuthGuard from "./components/auth/AuthGuard";
 import { AddEventForm } from "./pages/AddEventForm";
 import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
+import { EditProfile } from "./pages/EditProfile";
 // import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
 
 const routerConfig = {
@@ -96,6 +97,10 @@ function App() {
                 <AddEventForm />
               </AuthGuard>
             }
+          />
+          <Route 
+          path="/editprofile"
+          element = { <EditProfile/> }
           />
         </Routes>
       </Router>

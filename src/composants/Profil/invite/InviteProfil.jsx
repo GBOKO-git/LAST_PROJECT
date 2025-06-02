@@ -1,25 +1,57 @@
+import { useEffect, useState } from "react";
+import { authService } from "../../../services/authService";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../Loading/LoadingButton";
+
 export const InviteProfil = () => {
+  const [ loading, setLoading ] = useState(true)
+  const [ user, setUser ] = useState(null)
+  const [ error, setError ] = useState(null)
+  const navigate = useNavigate()
+  useEffect(() => { 
+    const getProfil = async () => {
+      try {
+        const userData = await authService.getCurrentUser();
+        if (userData) {
+          setUser(userData)
+        }
+      } catch (error) {
+        setError( error.message || "chargement impossible!")
+      } finally {
+        setLoading(false)
+      }
+    }
+    getProfil()
+  }, [])
+
+  const handleDisconnect = () => {
+    authService.logout();
+    navigate("/connexion")
+  }
+  if (loading)  return <Loading />
+  if (error)  return <p>Erreur lors du chargement des données !</p>
+
   return (
     <>
-      <body className="bg-gradient-to-r  min-h-screen flex items-center justify-center p-4">
+      <body className="bg-gradient-to-r  min-h-screen flex items-center justify-center p-4 mt-12">
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-sm w-full overflow-hidden transition-all duration-300 hover:shadow-indigo-500/50 dark:hover:shadow-blue-900/50">
           <div className="relative h-32 bg-gradient-to-r from-indigo-600 to-blue-700">
             <img
               src="https://i.pravatar.cc/300"
-              alt="John Doe"
-              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-105"
+              alt="photo"
+              className="absolute bg-black text-white bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 transition-transform duration-300 hover:scale-105"
             />
           </div>
           <div className="pt-16 pb-6 px-6 text-center">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
-              gboko
+             {user.nom} {" "} 
             </h1>
             <p className="text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
-              Software Developer
+              {user.prenom}
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Passionate about creating user-friendly web applications and
-              solving complex problems.
+              {/* Passionate about creating user-friendly web applications and
+              solving complex problems. */}
             </p>
             <div className="flex justify-center space-x-4 mb-6">
               <a
@@ -71,20 +103,27 @@ export const InviteProfil = () => {
               </a>
             </div>
             <div className="flex justify-center space-x-2">
-              <span className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
-                JavaScript
+              <span
+              onClick={() => navigate("/don")}
+              className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
+                Faire un don 
               </span>
-              <span className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
-                React
+              <span
+              onClick={() => navigate("/demandemembre")}
+              className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
+                Demenade menbre
               </span>
-              <span className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
-                Node.js
+              <span
+              onClick={() => navigate("/historiquedon")}
+              className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
+                Historique de mes dons
               </span>
             </div>
           </div>
           <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4">
-            <button className="w-full bg-indigo-800 text-white py-2 rounded-lg font-semibold hover:bg-blue-900 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
-              disConnect
+            <button
+            onClick={handleDisconnect} className="w-full bg-red-800 text-white py-2 rounded-lg font-semibold hover:bg-blue-900 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-800 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+              Deconnexion
             </button>
           </div>
         </div>

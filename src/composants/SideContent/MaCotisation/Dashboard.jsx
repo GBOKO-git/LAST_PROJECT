@@ -64,11 +64,11 @@ export default function AdminDashboard() {
             Admin<span className="text-indigo-800">Panel</span>
           </div>
           <div className="flex items-center space-x-2">
-            {/* <img
+            <img
               className="w-10 h-10 rounded-full object-cover"
               src="https://i.pinimg.com/564x/de/0f/3d/de0f3d06d2c6dbf29a888cf78e4c0323.jpg"
               alt="Profile"
-            /> */}
+            />
             <i>A.E.E.Y</i>
           </div>
         </div>
@@ -81,7 +81,7 @@ export default function AdminDashboard() {
               { icon: <MdDashboard />, label: "Home", link: "/accueil" },
               { icon: <MdOutlineTune />, label: "Configuration", link: "/validateMembers" },
               { icon: <MdOutlineFileCopy />, label: "Evenement", link: "/addeventform" },
-              { icon: <MdOutlineFileCopy />, label: "Documents", link: "/accueil" },
+              { icon: <MdOutlineFileCopy />, label: "Cotisation", link: "/don" },
             ].map((item) => (
               <a
                 key={item.label}
@@ -100,7 +100,7 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-xl shadow-lg p-4">
             {[
               { icon: <MdOutlineFaceUnlock />, label: "Profil", link: "/profile" },
-              { icon: <IoSettingsOutline />, label: "Paramètres", link: "/settings" },
+              { icon: <IoSettingsOutline />, label: "Paramètres", link: "/editprofile" },
               { icon: <MdPowerSettingsNew />, label: "Déconnexion", link: "/logout" },
             ].map((item) => (
               <a
