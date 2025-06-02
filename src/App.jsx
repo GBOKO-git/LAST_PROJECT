@@ -13,7 +13,8 @@ import { DashboardPage } from "./pages/Dashboard";
 import { ValidateMembers } from "./pages/validateMembers";
 import AuthGuard from "./components/auth/AuthGuard";
 import { AddEventForm } from "./pages/AddEventForm";
-import { MonEspaceDonateur } from "./pages/Espacedonateur";
+import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
+// import { MonEspaceDonateur } from "./pages/MonEspaceDonateur";
 
 const routerConfig = {
   future: {
