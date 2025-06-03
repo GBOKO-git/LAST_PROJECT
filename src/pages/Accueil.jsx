@@ -19,7 +19,7 @@ export const Accueil = () => {
 
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen w-full overflow-x-hidden">
       <Hero />
       <About />
       <Evenement />
