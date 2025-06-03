@@ -45,7 +45,7 @@ export const Evenement = () => {
         {/* Bouton voir tous */}
         <div className="text-center mt-10">
           <a
-            href="/evenements"
+            href="/evenement"
             className="inline-block bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300"
           >
             Voir tous les événements

@@ -2,32 +2,32 @@ const Images = [
   {
     name: "Journée d'orientation",
     description: "Séance d'orientation et de conseils pour les nouveaux bacheliers de Yaokro",
-    image: "/images/events/orientation.jpg"
+    image: "/images/membres/parain1.jpeg"
   },
   {
     name: "Remise des prix d'excellence",
     description: "Cérémonie annuelle de récompense des meilleurs élèves et étudiants",
-    image: "/images/events/remise-prix.jpg"
+    image: "/images/membres/enseignant.jpeg"
   },
   {
     name: "Forum des métiers",
     description: "Rencontre avec des professionnels pour découvrir différents parcours de carrière",
-    image: "/images/events/forum.jpg"
+    image: "/images/membres/panovillage.jpeg"
   },
   {
     name: "Journée culturelle",
     description: "Célébration de notre culture à travers des danses, chants et expositions",
-    image: "/images/events/culture.jpg"
+    image: "/images/membres/ceremonie.jpeg"
   },
   {
     name: "Session de mentorat",
     description: "Accompagnement personnalisé des plus jeunes par les aînés de l'association",
-    image: "/images/events/mentorat.jpg"
+    image: "/images/membres/panoscolaire.jpeg"
   },
   {
     name: "Activité sportive",
     description: "Tournoi sportif inter-écoles pour promouvoir l'esprit d'équipe",
-    image: "/images/events/sport.jpg"
+    image: "/images/membres/victoire.jpeg"
   }
 ];
 

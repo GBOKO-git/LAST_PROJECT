@@ -4,32 +4,32 @@ import Loading from "../composants/Loading/LoadingButton";
 // Données temporaires pour simuler l'API
 const membresData = [
   {
-    name: 'AZOUM',
+    name: 'amara gboko',
     job: "Président",
-    photo: "https://via.placeholder.com/150",
-    phone: "+225 0123456789",
-    email: "azoum@example.com"
+    photo: "/members/azoum.jpg",
+    phone: "+225 0758019243",
+    email: "gboko.amara1@gmail.com"
   },
   {
-    name: 'KOFFI',
-    job: "Vice-Président",
-    photo: "https://via.placeholder.com/150",
-    phone: "+225 0123456789",
-    email: "koffi@example.com"
+    name: 'KAMAGATE Gboko',
+    job: "Président fondateur",
+    photo: "/members/kamagate.jpeg",
+    phone: "+225 0757582663",
+    email: "gbokokamagate@gmail.com "
   },
   {
-    name: 'KOUAME',
-    job: "Secrétaire",
-    photo: "https://via.placeholder.com/150",
-    phone: "+225 0123456789",
-    email: "kouame@example.com"
+    name: 'KOUAKOU Kouassi Jean Cyrille',
+    job: "Vice-President",
+    photo: "/members/azoum.jpg",
+    phone: "+225 0759689636",
+    email: "kouk030403@gmail.com"
   },
   {
-    name: 'YAO',
-    job: "Trésorier",
-    photo: "https://via.placeholder.com/150",
-    phone: "+225 0123456789",
-    email: "yao@example.com"
+    name: 'Amara Adigata',
+    job: "Trésorière",
+    photo: "/members/adigata.jpeg",
+    phone: "+225 0747408523",
+    email: "adigataamara@gmail.com"
   }
 ];
 
@@ -69,7 +69,7 @@ export const Membre = () => {
                 Yaokro, unis autour d'un objectif commun."
               </p>
             </div>
-            <div className="flex flex-wrap -m-2">
+            <div className="flex flex-wrap -m-2 justify-center">
               {members.map((member, index) => (
                 <div key={index} className="p-2 lg:w-1/3 md:w-1/2 w-full">
                   <div className="h-full flex flex-col items-center shadow-md bg-blue-100 border-gray-200 border p-4 rounded-lg">
@@ -79,7 +79,7 @@ export const Membre = () => {
                       src={member.photo}
                     />
                     <div className="text-center">
-                      <h2 className="text-gray-900 title-font font-medium">
+                      <h2 className="text-gray-900 title-font font-medium uppercase">
                         {member.name}
                       </h2>
                       <p className="text-gray-500">{member.phone}</p>
