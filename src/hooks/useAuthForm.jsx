@@ -88,7 +88,7 @@ const useAuthForm = (isLogin = true) => {
       };
 
       const response = await authService.login(loginData);
-      console.log('Réponse de connexion:', response); // Log de débogage
+      console.log("Réponse de connexion:", response); // Log de débogage
 
       // Message de succès
       setErrors({});
@@ -98,27 +98,31 @@ const useAuthForm = (isLogin = true) => {
       localStorage.removeItem("redirectAfterLogin"); // Nettoyer après utilisation
 
       // Vérification détaillée des rôles et permissions
-      console.log('Vérification des permissions:', { // Log de débogage
+      console.log("Vérification des permissions:", {
+        // Log de débogage
         isAdmin: response.isAdmin,
         isSuperAdmin: response.isSuperAdmin,
         role: response.role,
-        estValide: response.estValide
+        estValide: response.estValide,
       });
 
       // Redirection selon le rôle et la validation
-      if (response.isAdmin === true || response.isSuperAdmin === true || response.role === 'admin') {
-        console.log('Redirection vers le dashboard'); // Log de débogage
+      if (
+        response.isAdmin === true ||
+        response.isSuperAdmin === true ||
+        response.role === "admin"
+      ) {
+        console.log("Redirection vers le dashboard"); // Log de débogage
         navigate("/dashboard");
-      } else if (response.role === "member" && response.estValide === true) {
-        console.log('Redirection vers le profil membre'); // Log de débogage
+      } else if (response.role === "member" ) {
+        console.log("Redirection vers le profil membre"); // Log de débogage
         navigate(redirectUrl || "/profile");
       } else {
-        console.log('Redirection vers le profil restreint'); // Log de débogage
+        console.log("Redirection vers le profil restreint"); // Log de débogage
         navigate("/profilRestreint");
       }
-
     } catch (error) {
-      console.error('Erreur lors de la connexion:', error); // Log de débogage
+      console.error("Erreur lors de la connexion:", error); // Log de débogage
       setErrors({
         general:
           error.message || "Une erreur est survenue. Veuillez réessayer.",
@@ -139,7 +143,7 @@ const useAuthForm = (isLogin = true) => {
     try {
       const { confirmPassword, ...registerData } = formData;
       const response = await authService.register(registerData);
-
+      console.log("contenu de response à l'inscription", response);
       // Message de succès
       setErrors({});
 

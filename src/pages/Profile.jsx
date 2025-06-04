@@ -3,43 +3,13 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Importez useLocation
 import { authService } from "../services/authService";
 import { ProfilRestreint } from "./ProfilRestreint"; // Importez le composant ProfilRestreint
+import { IoSettingsSharp } from "react-icons/io5";
+import { FaUserGraduate } from "react-icons/fa";
+import { RiLockPasswordFill } from "react-icons/ri";
+import { BsBank } from "react-icons/bs";
 
 // --- Import des icônes ---
-const HomeIcon = () => (
-  <svg
-    className="w-5 h-5 text-gray-500"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-  </svg>
-);
-const UserIcon = () => (
-  <svg
-    className="w-5 h-5 text-gray-500"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-      clipRule="evenodd"
-    ></path>
-  </svg>
-);
-const LockIcon = () => (
-  <svg
-    className="w-5 h-5 text-gray-500"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path
-      fillRule="evenodd"
-      d="M5 9V7a5 5 0 0110 0v2a2 1 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-      clipRule="evenodd"
-    ></path>
-  </svg>
-);
+
 const LogoutIcon = () => (
   <svg
     className="w-5 h-5 text-gray-500"
@@ -139,11 +109,11 @@ export const Profile = () => {
   // L'AuthGuard gère déjà la redirection initiale. Ici, on se base sur ce que l'AuthGuard a autorisé.
   if (
     !user ||
-    (!user.estValide && user.role === "member" && !user.isAdmin) ||
+    // (!user.estValide && user.role === "member" && !user.isAdmin) ||
     user.role === "donor" ||
-    user.role === "invite"
+    user.role === "user"
   ) {
-    // Si l'AuthGuard a laissé passer l'utilisateur jusqu'ici mais qu'il est 'member' non validé, 'donor' ou 'invite',
+    // Si  l'utilisateur est 'donor' ou 'USER',
     // on affiche le ProfilRestreint.
     return (
       <ProfilRestreint
@@ -186,10 +156,26 @@ export const Profile = () => {
               {
                 id: "myProfile",
                 label: "Mes Informations",
-                icon: <UserIcon />,
+                icon: <FaUserGraduate />,
               },
-               { id: "changePassword", label: "Changer mot de passe", icon: <LockIcon />, path: "/change-password" },
-               { id: "myContributions", label: "Mes Cotisations", icon: <HomeIcon />, path: "/don" },
+              {
+                id: "changePassword",
+                label: "Changer mot de passe",
+                icon: <RiLockPasswordFill />,
+                path: "/changepassword",
+              },
+              {
+                id: "myContributions",
+                label: "Mes Cotisations",
+                icon: <BsBank />,
+                path: "/don",
+              },
+              {
+                id: "myProfile",
+                label: "Parametre",
+                icon: <IoSettingsSharp />,
+                path: "/editprofile",
+              },
             ].map((item) => (
               <li key={item.id}>
                 <a

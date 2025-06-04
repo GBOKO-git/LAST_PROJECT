@@ -48,8 +48,17 @@ const AuthGuard = ({ children }) => {
           return;
         }
 
+
         if (location.pathname === '/profile') {
-          if (!isAdmin && (decoded.role === 'invite' || (decoded.role === 'member' && decoded.estValide !== true))) {
+          if (!isAdmin && decoded.role === 'member') {
+            console.log('Accès au profil autorisé'); // Log de débogage
+            navigate('/profile');
+            return;
+          }
+        }
+
+        if (location.pathname === '/profile') {
+          if (!isAdmin && (decoded.role === 'user' || (decoded.role === 'member' && decoded.estValide !== true))) {
             console.log('Accès au profil refusé, redirection vers profil restreint'); // Log de débogage
             navigate('/profilRestreint');
             return;

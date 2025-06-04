@@ -23,7 +23,7 @@ class AuthService {
 
       const processedUser = {
         ...user,
-        role: user.role || 'invite',
+        role: user.role || 'user',
         estValide: user.estValide === true,
         isAdmin: user.isAdmin === true || user.role === 'admin',
         isSuperAdmin: user.isSuperAdmin === true

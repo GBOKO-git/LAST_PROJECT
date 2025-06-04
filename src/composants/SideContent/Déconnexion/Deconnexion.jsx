@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const Deconnexion = () => {
+export const Deconnexion = ({onClose}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -9,11 +9,11 @@ export const Deconnexion = () => {
     navigate("/connexion");
   };
 
-  const handleCancel = () => {
-    const redirectPath = localStorage.getItem("cancelLogoutRedirect") || "/";
-    localStorage.removeItem("cancelLogoutRedirect");
-    navigate(redirectPath);
-  };
+  // const handleCancel = () => {
+  //   const redirectPath = localStorage.getItem("cancelLogoutRedirect") || "/";
+  //   localStorage.removeItem("cancelLogoutRedirect");
+  //   navigate(redirectPath);
+  // };
 
   return (
     <>
@@ -21,17 +21,17 @@ export const Deconnexion = () => {
         <div
           aria-hidden="true"
           className="fixed inset-0 w-full h-full bg-black bg-opacity-25"
-          onClick={handleCancel}
+          onClick={onClose}
         ></div>
         <div className="relative z-50 bg-white rounded-lg p-8 max-w-md w-full mx-4">
           <h2 className="text-2xl font-bold mb-4">Confirmation de déconnexion</h2>
           <p className="text-gray-600 mb-6">
             Êtes-vous sûr de vouloir vous déconnecter ?
           </p>
-          <div className="flex justify-end space-x-4">
+          <div className="flex justify-around space-x-4">
             <button
-              onClick={handleCancel}
-              className="px-4 py-2 text-gray-600 hover:text-gray-800"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-400 rounded text-white hover:text-gray-800"
             >
               Annuler
             </button>

@@ -12,20 +12,23 @@ import { IoSettingsOutline } from "react-icons/io5";
 import useStats from "../../../hooks/useStats";
 import { useAdminStats } from "../../../hooks/useAdminStats";
 import Loading from "../../Loading/LoadingButton";
+import { useState } from "react";
+import { Deconnexion } from "../Déconnexion/Deconnexion";
 // import Loading from "../Loading/loadingButton";
 
 export default function AdminDashboard() {
+  const [showModal, setShowModal] = useState(false);
   useStats();
   const { stats, loading } = useAdminStats();
 
   const cards = [
     {
-      title: "Membres ",
+      title: " Les Membres ",
       value: stats?.members || 0,
       color: "indigo",
     },
     {
-      title: "Persones inscrites  ",
+      title: "Personnes inscrites  ",
       value: stats?.users || 0,
       color: "yellow",
     },
@@ -79,9 +82,21 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-xl shadow-lg mb-6 p-4">
             {[
               { icon: <MdDashboard />, label: "Home", link: "/accueil" },
-              { icon: <MdOutlineTune />, label: "Configuration", link: "/validateMembers" },
-              { icon: <MdOutlineFileCopy />, label: "Evenement", link: "/addeventform" },
-              { icon: <MdOutlineFileCopy />, label: "Cotisation", link: "/don" },
+              {
+                icon: <MdOutlineTune />,
+                label: "Configuration",
+                link: "/validateMembers",
+              },
+              {
+                icon: <MdOutlineFileCopy />,
+                label: "Evenement",
+                link: "/addeventform",
+              },
+              {
+                icon: <MdOutlineFileCopy />,
+                label: "Cotisation",
+                link: "/don",
+              },
             ].map((item) => (
               <a
                 key={item.label}
@@ -98,10 +113,10 @@ export default function AdminDashboard() {
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-4">
-            {[
+            {/* {[
               { icon: <MdOutlineFaceUnlock />, label: "Profil", link: "/profile" },
               { icon: <IoSettingsOutline />, label: "Paramètres", link: "/editprofile" },
-              { icon: <MdPowerSettingsNew />, label: "Déconnexion", link: "/logout" },
+              { icon: <MdPowerSettingsNew />, label: "Déconnexion", onClick: () => setShowModal(true) },
             ].map((item) => (
               <a
                 key={item.label}
@@ -114,14 +129,61 @@ export default function AdminDashboard() {
                   <MdKeyboardDoubleArrowRight />
                 </span>
               </a>
-            ))}
+            ))} */}
+
+            {[
+              {
+                icon: <MdOutlineFaceUnlock />,
+                label: "Profil",
+                link: "/profile",
+              },
+              {
+                icon: <IoSettingsOutline />,
+                label: "Paramètres",
+                link: "/editprofile",
+              },
+              {
+                icon: <MdPowerSettingsNew />,
+                label: "Déconnexion",
+                onClick: () => setShowModal(true),
+              },
+            ].map((item) =>
+              item.link ? (
+                <a
+                  key={item.label}
+                  href={item.link}
+                  className="flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1"
+                >
+                  <span className="mr-2">{item.icon}</span>
+                  {item.label}
+                  <span className="ml-auto">
+                    <MdKeyboardDoubleArrowRight />
+                  </span>
+                </a>
+              ) : (
+                <button
+                  key={item.label}
+                  onClick={item.onClick}
+                  className="w-full text-left flex items-center text-gray-600 hover:text-indigo-800 py-4 transition-all duration-300 hover:translate-x-1"
+                >
+                  <span className="mr-2">{item.icon}</span>
+                  {item.label}
+                  <span className="ml-auto">
+                    <MdKeyboardDoubleArrowRight />
+                  </span>
+                </button>
+              )
+            )}
           </div>
         </aside>
 
         <main className="flex-1 p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {showModal && <Deconnexion onClose={() => setShowModal(false)} />}
             {loading ? (
-              <div className="col-span-3 text-center text-gray-600"><Loading/></div>
+              <div className="col-span-3 text-center text-gray-600">
+                <Loading />
+              </div>
             ) : (
               cards.map((card, i) => (
                 <div
@@ -129,7 +191,9 @@ export default function AdminDashboard() {
                   className={`bg-${card.color}-100 border border-${card.color}-200 rounded-xl p-6 h-44 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-slide-up`}
                   style={{ animationDelay: `${i * 0.1}s` }}
                 >
-                  <h3 className="text-xl font-bold text-gray-800">{card.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-800">
+                    {card.title}
+                  </h3>
                   <p className="text-4xl text-${card.color}-800 font-semibold mt-4">
                     {card.value}
                   </p>

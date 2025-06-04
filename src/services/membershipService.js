@@ -30,7 +30,7 @@ export const membershipService = {
     }
   },
 
-  // Vous pourriez ajouter d'autres méthodes ici à l'avenir, par exemple :
+  // Autres méthodes à ajouter ici à l'avenir:
   // getRequestStatus: async (requestId) => { /* ... */ },
   // cancelRequest: async (requestId) => { /* ... */ },
 };
