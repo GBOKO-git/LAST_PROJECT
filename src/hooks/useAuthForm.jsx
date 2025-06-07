@@ -13,7 +13,7 @@ const useAuthForm = (isLogin = true) => {
           firstName: "",
           lastName: "",
           confirmPassword: "",
-          role: "user",
+          role: "",
         }),
   });
 

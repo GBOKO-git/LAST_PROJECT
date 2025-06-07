@@ -179,9 +179,7 @@ class AuthService {
       prenom: registerData.firstName,
       email: registerData.email,
       password: registerData.password,
-      // Le rôle est 'user' par défaut, même si le formulaire propose 'member',
-      // car le rôle 'member' sera attribué via le processus de demande d'adhésion.
-      role: 'user' 
+      role: registerData.role 
     };
 
     const response = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.REGISTER), {

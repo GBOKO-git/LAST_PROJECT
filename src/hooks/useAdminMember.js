@@ -56,29 +56,50 @@ export const useAdminMembers = () => {
     fetchMembers();
   }, []);
 
+  // const validate = async (id) => {
+  //   const token = localStorage.getItem("token");
+
+  //   try {
+  //     const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${id}/validate`), {
+  //       method: 'PUT',
+  //       headers: getDefaultHeaders(token)
+  //     });
+  //     await handleApiError(response);
+
+  //     setMembers((prev) => prev.filter((m) => m._id !== id));
+  //   } catch (err) {
+  //     console.error("Erreur lors de la validation :", err);
+  //     alert("Erreur lors de la validation du membre.");
+  //   }
+  // };
+
   const validate = async (id) => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    try {
-      const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${id}/validate`), {
-        method: 'PUT',
-        headers: getDefaultHeaders(token)
-      });
-      await handleApiError(response);
+  try {
+    const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/validate/${id}`), {
+      method: 'PUT',
+      headers: getDefaultHeaders(token)
+    });
 
-      setMembers((prev) => prev.filter((m) => m._id !== id));
-    } catch (err) {
-      console.error("Erreur lors de la validation :", err);
-      alert("Erreur lors de la validation du membre.");
-    }
-  };
+    console.log("Réponse brute de l’API :", response);
+
+    const data = await handleApiError(response);
+    console.log("Réponse traitée :", data);
+
+    setMembers((prev) => prev.filter((m) => m._id !== id));
+  } catch (err) {
+    console.error("Erreur lors de la validation :", err);
+    alert("Erreur lors de la validation du membre.");
+  }
+};
 
   const reject = async (id) => {
     const token = localStorage.getItem("token");
     if (!window.confirm("Rejeter la demande de ce membre ?")) return;
 
     try {
-      const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/${id}/reject`), {
+      const response = await fetch(buildApiUrl(`${API_CONFIG.ENDPOINTS.USERS}/reject/${id}`), {
         method: 'PATCH',
         headers: getDefaultHeaders(token)
       });
