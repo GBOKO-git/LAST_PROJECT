@@ -1,36 +1,36 @@
+
 // src/services/membershipService.js
 
 import { API_CONFIG, buildApiUrl, getDefaultHeaders } from './api.config';
 
 export const membershipService = {
-  /**
-   * Envoie une nouvelle demande d'adhésion au backend.
-   * @param {Object} requestData - Les données du formulaire de demande (nom, prenom, email, message, etc.).
-   * @returns {Promise<Object>} La réponse du backend après l'envoi de la demande.
-   */
   submitRequest: async (requestData) => {
     try {
-      const response = await fetch(buildApiUrl(`${API_CONFIG}/membership-requests`), { // Exemple d'endpoint
+      const token = localStorage.getItem('token'); // <-- C'est ici que le token est récupéré
+     
+      if (!token) {
+        throw new Error('Non connecté. Veuillez vous authentifier pour soumettre une demande.');
+      }
+
+      const url = buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.DEMANDE); 
+      
+      const headers = getDefaultHeaders(token); 
+
+      const response = await fetch(url, {
         method: 'POST',
-        headers: getDefaultHeaders(),
+        headers: headers, 
         body: JSON.stringify(requestData),
       });
 
-      // Vérifier si la réponse est OK (statut HTTP 2xx)
       if (!response.ok) {
-        const errorData = await response.json(); // Tenter de lire le message d'erreur du backend
+        const errorData = await response.json().catch(() => ({ message: "Erreur inconnue du serveur." }));
+        console.error("Erreur détaillée du backend:", errorData); // Affiche le message d'erreur du backend
         throw new Error(errorData.message || "Échec de l'envoi de la demande d'adhésion.");
       }
-
-      // Si la réponse est OK, retourner les données (souvent un message de succès ou l'objet créé)
       return response.json();
     } catch (error) {
-      console.error("Erreur dans submitRequest:", error);
-      throw error; // Propager l'erreur pour qu'elle soit gérée par le composant
+      console.error("Erreur dans membershipService.submitRequest:", error);
+      throw error;
     }
   },
-
-  // Autres méthodes à ajouter ici à l'avenir:
-  // getRequestStatus: async (requestId) => { /* ... */ },
-  // cancelRequest: async (requestId) => { /* ... */ },
 };

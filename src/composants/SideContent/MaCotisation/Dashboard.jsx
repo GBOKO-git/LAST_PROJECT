@@ -81,7 +81,7 @@ export default function AdminDashboard() {
         <aside className="sidebar fixed lg:static w-[240px] bg-indigo-50 h-[calc(100vh-4rem)] lg:h-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-45 overflow-y-auto p-4">
           <div className="bg-white rounded-xl shadow-lg mb-6 p-4">
             {[
-              { icon: <MdDashboard />, label: "Home", link: "/accueil" },
+              { icon: <MdDashboard />, label: "Home", link: "/" },
               {
                 icon: <MdOutlineTune />,
                 label: "Configuration",

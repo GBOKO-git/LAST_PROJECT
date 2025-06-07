@@ -160,6 +160,28 @@ const useAuthForm = (isLogin = true) => {
     }
   };
 
+  const handleRequestMember = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const { confirmPassword, ...memberData } = formData;
+      const response = await authService.memberRequest(memberData);
+      console.log("contenu de la demande membre ", response);
+
+      // message de succès
+      setErrors({})
+
+      // Redirection après demande
+      navigate(-1)
+    } catch (error) {
+      console.log("Erreur de demande", error);
+      
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     formData,
     errors,
@@ -167,6 +189,7 @@ const useAuthForm = (isLogin = true) => {
     handleChange,
     handleSubmit,
     handleSubmitRegister,
+    handleRequestMember
   };
 };
 
