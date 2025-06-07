@@ -32,13 +32,13 @@ const AuthGuard = ({ children }) => {
         }
 
         // Vérification des accès selon le rôle
-        console.log('Vérification des permissions:', { // Log de débogage
-          path: location.pathname,
-          isAdmin: decoded.isAdmin === true,
-          isSuperAdmin: decoded.isSuperAdmin === true,
-          role: decoded.role,
-          estValide: decoded.estValide === true
-        });
+        // console.log('Vérification des permissions:', { // Log de débogage
+        //   path: location.pathname,
+        //   isAdmin: decoded.isAdmin === true,
+        //   isSuperAdmin: decoded.isSuperAdmin === true,
+        //   role: decoded.role,
+        //   estValide: decoded.estValide === true
+        // });
 
         const isAdmin = decoded.isAdmin === true || decoded.isSuperAdmin === true || decoded.role === 'admin';
 

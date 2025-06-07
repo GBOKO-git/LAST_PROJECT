@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { CreditCard } from "lucide-react";
-import PayPalButton from "../paypal/PaypalButton";
 import { usePaymentMethod } from "../../hooks/usePaymentMethod";
 import { IoLogoPaypal } from "react-icons/io5";
+import { PayPalButton } from "../paypal/PaypalButton";
 // import { usePaymentMethod } from "@/hooks/usePaymentMethod";
-// import PayPalButton from "../paypal/PaypalButton";
 
 const PaymentMethod = ({ amount, type, donorInfo }) => {
   const [active, setActive] = useState(type || "bank");
@@ -89,7 +88,7 @@ const PaymentMethod = ({ amount, type, donorInfo }) => {
 
         {active === "paypal" && (
           <div>
-            <PayPalButton 
+            <PayPalButton
               amount={amount?.toFixed(2)} 
               currency="EUR"
               onSuccess={async (details) => {

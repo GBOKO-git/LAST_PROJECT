@@ -1,7 +1,7 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { useEffect, useState } from "react";
 
-const PayPalButton = () => {
+export const PayPalButton = () => {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -44,4 +44,3 @@ const PayPalButton = () => {
   );
 };
 
-export default PayPalButton;
