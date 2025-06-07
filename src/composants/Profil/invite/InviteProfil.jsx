@@ -114,9 +114,9 @@ export const InviteProfil = () => {
                 Demenade menbre
               </span>
               <span
-              onClick={() => navigate("/historiquedon")}
+              onClick={() => navigate("/editprofile")}
               className="px-3 py-1 text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700">
-                Historique de mes dons
+                Paramètre du compte
               </span>
             </div>
           </div>

@@ -1,6 +1,6 @@
 // aeey_client\src\pages\EditProfile.jsx
 
-import { EditeProfile } from "../composants/SideContent/MonProfile/EditéProfile"
+import { EditeProfile } from "../composants/SideContent/MonProfile/EditeProfile"
 
 export const EditProfile = () => {
     return (

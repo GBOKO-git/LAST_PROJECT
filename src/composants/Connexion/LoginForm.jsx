@@ -15,8 +15,8 @@ export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className=" rounded p-3 md:py-10 shadow-lg space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Connexion à votre compte
@@ -29,14 +29,14 @@ export const LoginForm = () => {
           </p>
         </div>
 
-        <form className="mt-8 space-y-6 grid justify-center items-center" onSubmit={handleSubmit}>
+        <form className="mt-8 w-auto space-y-6 grid justify-center items-center" onSubmit={handleSubmit}>
           {errors.general && (
             <div className="rounded-md bg-red-50 p-4">
               <p className="text-red-500 text-sm">{errors.general}</p>
             </div>
           )}
 
-          <div className="space-y-4">
+          <div className="space-y-4 w-full">
             <div>
               <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
                 Email
@@ -80,7 +80,7 @@ export const LoginForm = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="grid md:flex items-center justify-between w-full">
             <div className="flex items-center">
               <input
                 id="remember-me"
@@ -89,10 +89,10 @@ export const LoginForm = () => {
                 className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                Se souvenir de moi
+                Se souvenir de moi{" "}
               </label>
             </div>
-
+              
             <div className="text-sm">
               <a href="#" className="font-medium text-green-600 hover:text-green-500">
                 Mot de passe oublié ?

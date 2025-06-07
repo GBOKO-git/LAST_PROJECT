@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_CONFIG, buildApiUrl, getDefaultHeaders } from "../services/api.config";
 
-export const useUser = () => {
+ export const useUser = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
