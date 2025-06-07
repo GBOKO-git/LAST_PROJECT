@@ -85,7 +85,7 @@ export const EditeProfile = () => {
   if (error) return <p className="text-red-500 text-center mt-4">Erreur de chargement : {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cyan-50 to-cyan-100 flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="bg-white w-full max-w-4xl rounded-2xl shadow-lg overflow-hidden">
         {/* Stepper */}
         <div className="flex justify-between items-center bg-cyan-100 px-8 py-4">
