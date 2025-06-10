@@ -1,18 +1,21 @@
 // Configuration de base de l'API
 export const API_CONFIG = {
-  BASE_URL: import.meta.env.VITE_API_URL ,
+  BASE_URL: import.meta.env.VITE_API_URL,
   ENDPOINTS: {
     AUTH: {
-      LOGIN: '/api/auth/login',
-      REGISTER: '/api/auth/register',
-      PROFILE: '/api/auth/profile',
-      DEMANDE: '/api/auth/request',
+      LOGIN: "/api/auth/login",
+      REGISTER: "/api/auth/register",
+      PROFILE: "/api/auth/profile",
+      DEMANDE: "/api/auth/request",
     },
-    USERS: '/api/auth',
-    EVENTS: '/api/events',
-    TRANSACTIONS: '/api/transactions',
-    PAYMENTS: '/api/payments'
-  }
+    USERS: "/api/auth",
+    EVENTS: "/api/events",
+    TRANSACTIONS: "/api/transactions",
+    PAYMENTS: "/api/payments",
+    IMAGES: {
+      UPLOAD: "/api/images/upload",
+    },
+  },
 };
 
 // Fonction utilitaire pour construire les URLs de l'API
@@ -23,12 +26,12 @@ export const buildApiUrl = (endpoint) => {
 // Headers par défaut pour les requêtes API
 export const getDefaultHeaders = (token = null) => {
   const headers = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    "Content-Type": "application/json",
+    Accept: "application/json",
   };
 
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
 
   return headers;
@@ -37,24 +40,25 @@ export const getDefaultHeaders = (token = null) => {
 // Fonction utilitaire pour gérer les erreurs de l'API
 export const handleApiError = async (response) => {
   if (!response.ok) {
-    const contentType = response.headers.get('content-type');
+    const contentType = response.headers.get("content-type");
     let errorMessage;
 
     try {
-      if (contentType && contentType.includes('application/json')) {
+      if (contentType && contentType.includes("application/json")) {
         const errorData = await response.json();
-        errorMessage = errorData.message || errorData.error || 'Une erreur est survenue';
+        errorMessage =
+          errorData.message || errorData.error || "Une erreur est survenue";
       } else {
         const text = await response.text();
-        errorMessage = text || 'Une erreur est survenue';
+        errorMessage = text || "Une erreur est survenue";
       }
     } catch (e) {
-      console.error('Erreur lors du parsing de la réponse:', e);
-      errorMessage = 'Une erreur est survenue lors du traitement de la réponse';
+      console.error("Erreur lors du parsing de la réponse:", e);
+      errorMessage = "Une erreur est survenue lors du traitement de la réponse";
     }
 
     if (response.status === 401) {
-      errorMessage = 'Token invalide ou expiré';
+      errorMessage = "Token invalide ou expiré";
     }
 
     throw new Error(errorMessage);
@@ -63,7 +67,7 @@ export const handleApiError = async (response) => {
   try {
     return await response.json();
   } catch (e) {
-    console.error('Erreur lors du parsing de la réponse:', e);
-    throw new Error('Format de réponse invalide');
+    console.error("Erreur lors du parsing de la réponse:", e);
+    throw new Error("Format de réponse invalide");
   }
-}; 
+};
