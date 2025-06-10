@@ -33,7 +33,7 @@ export const EditeProfile = () => {
     job: '',
     cv: '',
     address: '',
-    photo: '',
+    
   });
 
   // Synchroniser les données quand l'utilisateur est chargé
@@ -47,7 +47,7 @@ export const EditeProfile = () => {
         job: user.job || '',
         cv: user.cv || '',
         address: user.address || '',
-        photo: user.photo || '',
+       
       });
     }
   }, [user]);
@@ -137,7 +137,6 @@ export const EditeProfile = () => {
                 <Input label="Fonction" name="job" value={formData.job} onChange={handleChange} />
                 <Input label="CV" name="cv" value={formData.cv} onChange={handleChange} />
                 <Input label="Adresse" name="address" value={formData.address} onChange={handleChange} />
-                <Input label="Photo (URL)" name="photo" value={formData.photo} onChange={handleChange} />
               </div>
             </>
           )}
@@ -152,7 +151,6 @@ export const EditeProfile = () => {
                 <p><strong>Fonction:</strong> {formData.job}</p>
                 <p><strong>CV:</strong> {formData.cv}</p>
                 <p><strong>Adresse:</strong> {formData.address}</p>
-                <p><strong>Photo:</strong> {formData.photo}</p>
               </div>
             </>
           )}

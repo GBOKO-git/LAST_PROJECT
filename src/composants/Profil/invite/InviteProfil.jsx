@@ -73,19 +73,16 @@ export const InviteProfil = () => {
             initialImage={photo}
           />
         </div>
-        <div className="pt-16 pb-6 px-6 text-center">
+        <div className="pt-7 pb-6 px-6 text-center">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-1">
-            {user.nom}
+            {user.nom} {" "} {user.prenom}
           </h1>
-          <p className="text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
-            {user.prenom}
-          </p>
+          
           <p className="text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
             {user.job}
           </p>
           <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Passionate about creating user-friendly web applications and solving
-            complex problems.
+            {user.role === "user" ? <p> Utilisateur </p>  : <p>Donateur</p> }
           </p>
           {/* Reste du contenu... */}
         </div>
@@ -138,22 +135,22 @@ export const InviteProfil = () => {
             </svg>
           </a>
         </div>
-          <div className="w-full grid justify-center space-y-4">
+          <div className="bg-gray-50 dark:bg-gray-700 px-6 py-4 grid text-center space-y-4">
               <span
                 onClick={() => navigate("/don")}
-                className="p-5 w-full  text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
+                className="py-2  w-full  text-md uppercase bg-indigo-100 text-indigo-800 rounded-lg transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
               >
                 Faire un don
               </span>
               <span
                 onClick={() => navigate("/demandemembre")}
-                className="p-5 w-full  text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
+                className="py-2  w-full  text-md uppercase bg-indigo-100 text-indigo-800 rounded-lg transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
               >
                 Demenade menbre
               </span>
               <span
                 onClick={() => navigate("/editprofile")}
-                className="p-5 w-full  text-sm bg-indigo-100 text-indigo-800 rounded-full transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
+                className="py-2  w-full  text-md uppercase bg-indigo-100 text-indigo-800 rounded-lg transition-colors duration-300 hover:bg-indigo-800 hover:text-white dark:bg-indigo-900 dark:text-indigo-200 dark:hover:bg-indigo-700"
               >
                 Paramètre du compte
               </span>
