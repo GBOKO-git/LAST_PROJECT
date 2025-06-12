@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from 'react';
 import { FaUser, FaPhone, FaMapMarkerAlt, FaCheck } from 'react-icons/fa';
 import { useUserProfile } from '../../../hooks/useUserProfile';

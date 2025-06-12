@@ -159,12 +159,6 @@ export const Profile = () => {
                 icon: <FaUserGraduate />,
               },
               {
-                id: "changePassword",
-                label: "Changer mot de passe",
-                icon: <RiLockPasswordFill />,
-                path: "/changepassword",
-              },
-              {
                 id: "myContributions",
                 label: "Mes Cotisations",
                 icon: <BsBank />,
@@ -172,7 +166,7 @@ export const Profile = () => {
               },
               {
                 id: "myProfile",
-                label: "Parametre",
+                label: "Paramètres",
                 icon: <IoSettingsSharp />,
                 path: "/editprofile",
               },
@@ -309,7 +303,7 @@ export const Profile = () => {
                         Téléphone
                       </p>
                       <p className="mt-1 text-lg text-gray-900">
-                        {user.telephone || "Non renseigné"}
+                        {user?.telephone || "Non renseigné"}
                       </p>
                     </div>
                   </div>
