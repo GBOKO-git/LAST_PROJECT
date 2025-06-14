@@ -116,7 +116,7 @@ export const usePaymentMethod = () => {
 
     try {
       const paymentData = {
-        amount: euroAmount,
+        amount: amountXof,
         paymentMethod: "mobile",
         type,
         isAnonymous: donorInfo?.isAnonymous || false,
