@@ -1,12 +1,17 @@
 // hooks/usePaymentMethod.js
-import { useUser } from './useUser';
+import {
+  API_CONFIG,
+  buildApiUrl,
+  getDefaultHeaders,
+} from "../services/api.config";
+import { useUser } from "./useUser";
 
 export const usePaymentMethod = () => {
   const { user } = useUser();
+  const token = localStorage.getItem("token");
 
   const initiatePayment = async (paymentData) => {
     try {
-      // Préparer les données minimales pour un don anonyme
       const basePaymentData = {
         amount: paymentData.amount,
         paymentMethod: paymentData.paymentMethod,
@@ -15,62 +20,63 @@ export const usePaymentMethod = () => {
         isAnonymous: paymentData.isAnonymous || false,
       };
 
-      // Si ce n'est pas un don anonyme, ajouter les informations du donateur
       if (!paymentData.isAnonymous) {
         basePaymentData.userId = user?.id;
         basePaymentData.donorInfo = paymentData.donorInfo;
       } else {
-        // Pour les dons anonymes, on ajoute juste un identifiant unique
-        basePaymentData.anonymousId = 'ANON_' + Date.now();
+        basePaymentData.anonymousId = "ANON_" + Date.now();
       }
 
-      const res = await fetch("/api/payment/initiate", {
+      const res = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.INITIATE), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(basePaymentData)
+        headers: getDefaultHeaders(token),
+        body: JSON.stringify(basePaymentData),
       });
 
       const data = await res.json();
+
       if (!res.ok) {
-        throw new Error(data.message || 'Erreur lors de l\'initiation du paiement');
+        throw new Error(
+          data.message || "Erreur lors de l'initiation du paiement"
+        );
       }
+
       return data;
     } catch (error) {
-      console.error('Erreur lors de l\'initiation du paiement:', error);
+      console.error("Erreur lors de l'initiation du paiement:", error);
       throw error;
     }
   };
 
-  const handleStripeCheckout = async (amount, type = 'don', donorInfo = null) => {
+  const handleStripeCheckout = async (amount, type = "don", donorInfo = null) => {
     try {
-      // 1. Initier la transaction dans notre backend
       const paymentData = {
         amount,
-        paymentMethod: 'card',
+        paymentMethod: "card",
         type,
         isAnonymous: donorInfo?.isAnonymous || false,
         donorInfo: donorInfo?.isAnonymous ? null : donorInfo,
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
       };
 
       const { transactionId } = await initiatePayment(paymentData);
 
-      // 2. Rediriger vers Stripe
-      const res = await fetch("/api/payment/stripe", {
+      const res = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.STRIPE), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
+        headers: getDefaultHeaders(token),
+        body: JSON.stringify({
           amount,
           transactionId,
-          isAnonymous: donorInfo?.isAnonymous || false
-        })
+          isAnonymous: donorInfo?.isAnonymous || false,
+        }),
       });
 
       const data = await res.json();
+
       if (res.ok && data.url) {
         window.location.href = data.url;
       } else {
-        throw new Error(data.message || 'Erreur Stripe');
+        throw new Error(data.message || "Erreur Stripe");
       }
     } catch (err) {
       console.error("Erreur Stripe :", err);
@@ -78,21 +84,19 @@ export const usePaymentMethod = () => {
     }
   };
 
-  const handlePayPalPayment = async (amount, type = 'don', donorInfo = null) => {
+  const handlePayPalPayment = async (amount, type = "don", donorInfo = null) => {
     try {
-      // 1. Initier la transaction dans notre backend
       const paymentData = {
         amount,
-        paymentMethod: 'paypal',
+        paymentMethod: "paypal",
         type,
         isAnonymous: donorInfo?.isAnonymous || false,
         donorInfo: donorInfo?.isAnonymous ? null : donorInfo,
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
       };
 
       const { transactionId } = await initiatePayment(paymentData);
 
-      // 2. Retourner l'ID de transaction pour PayPal
       return transactionId;
     } catch (err) {
       console.error("Erreur PayPal :", err);
@@ -102,7 +106,7 @@ export const usePaymentMethod = () => {
 
   const euroToXof = (euroAmount) => Math.round(euroAmount * 655.957);
 
-  const handleCinetPay = async (euroAmount, type = 'don', donorInfo = null) => {
+  const handleCinetPay = async (euroAmount, type = "don", donorInfo = null) => {
     const amountXof = euroToXof(euroAmount);
 
     if (amountXof < 100) {
@@ -111,46 +115,27 @@ export const usePaymentMethod = () => {
     }
 
     try {
-      // 1. Initier la transaction dans notre backend
       const paymentData = {
         amount: euroAmount,
-        paymentMethod: 'mobile',
+        paymentMethod: "mobile",
         type,
         isAnonymous: donorInfo?.isAnonymous || false,
         donorInfo: donorInfo?.isAnonymous ? null : donorInfo,
-        year: new Date().getFullYear()
+        year: new Date().getFullYear(),
       };
 
-      const { transactionId } = await initiatePayment(paymentData);
+      // Appel à initiatePayment, qui retourne la réponse complète du backend
+      const data = await initiatePayment(paymentData);
+      console.log("Réponse API CinetPay (dans frontend) :", data);
 
-      // 2. Rediriger vers CinetPay
-      const res = await fetch("/api/payment/cinetpay", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          amount: amountXof,
-          transactionId,
-          isAnonymous: donorInfo?.isAnonymous || false
-        })
-      });
-
-      const text = await res.text();
-      let data;
-
-      try {
-        data = JSON.parse(text);
-      } catch (parseErr) {
-        console.error("❌ Réponse non JSON :", text);
-        throw new Error("Erreur inattendue : " + text);
-      }
-
-      if (data.url) {
-        window.location.href = data.url;
+      // --- CORRECTION ICI : Utiliser `data.paymentUrl` au lieu de `data.url` ---
+      if (data.paymentUrl) {
+        window.location.href = data.paymentUrl;
       } else {
         throw new Error("URL de paiement manquante");
       }
     } catch (err) {
-      console.error("Erreur CinetPay :", err);
+      console.error("Erreur CinetPay (frontend) :", err);
       alert("Erreur : " + err.message);
     }
   };
@@ -158,6 +143,6 @@ export const usePaymentMethod = () => {
   return {
     handleStripeCheckout,
     handlePayPalPayment,
-    handleCinetPay
+    handleCinetPay,
   };
 };

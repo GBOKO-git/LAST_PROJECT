@@ -12,6 +12,9 @@ export const API_CONFIG = {
     EVENTS: "/api/events",
     TRANSACTIONS: "/api/transactions",
     PAYMENTS: "/api/payments",
+    CINETPAY: "/api/cinetPay/payment",
+    STRIPE: "/api/payment/stripe",
+    INITIATE: "/api/payment/initiate",
     IMAGES: {
       UPLOAD: "/api/images/upload",
     },
