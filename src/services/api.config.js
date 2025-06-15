@@ -6,6 +6,7 @@ export const API_CONFIG = {
       LOGIN: "/api/auth/login",
       REGISTER: "/api/auth/register",
       PROFILE: "/api/auth/profile",
+      PHOTO: "/api/auth/profile/photo",
       DEMANDE: "/api/auth/request",
     },
     USERS: "/api/auth",
