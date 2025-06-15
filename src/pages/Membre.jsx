@@ -1,36 +1,42 @@
 import { useState, useEffect } from "react";
 import Loading from "../composants/Loading/LoadingButton";
+import {
+  API_CONFIG,
+  buildApiUrl,
+  getDefaultHeaders,
+} from "../services/api.config";
+import axios from "axios";
 
 // Données temporaires pour simuler l'API
 const membresData = [
   {
-    name: 'amara gboko',
+    name: "amara gboko",
     job: "Président",
     photo: "/members/azoum.jpg",
     phone: "+225 0758019243",
-    email: "gboko.amara1@gmail.com"
+    email: "gboko.amara1@gmail.com",
   },
   {
-    name: 'KAMAGATE Gboko',
+    name: "KAMAGATE Gboko",
     job: "Président fondateur",
     photo: "/members/kamagate.jpeg",
     phone: "+225 0757582663",
-    email: "gbokokamagate@gmail.com "
+    email: "gbokokamagate@gmail.com ",
   },
   {
-    name: 'KOUAKOU Kouassi Jean Cyrille',
+    name: "KOUAKOU Kouassi Jean Cyrille",
     job: "Vice-President",
     photo: "/members/azoum.jpg",
     phone: "+225 0759689636",
-    email: "kouk030403@gmail.com"
+    email: "kouk030403@gmail.com",
   },
   {
-    name: 'Amara Adigata',
+    name: "Amara Adigata",
     job: "Trésorière",
     photo: "/members/adigata.jpeg",
     phone: "+225 0747408523",
-    email: "adigataamara@gmail.com"
-  }
+    email: "adigataamara@gmail.com",
+  },
 ];
 
 export const Membre = () => {
@@ -39,11 +45,24 @@ export const Membre = () => {
 
   const getAllMembers = async () => {
     try {
-      // Simuler un appel API avec un délai
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setMembers(membresData);
+      const token = localStorage.getItem("token");
+      const headers = getDefaultHeaders(token);
+
+      if (!token) {
+        throw new Error("Token manquant. Veuillez vous connecter.");
+      }
+
+      const { data } = await axios.get(
+        buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.MEMBRE),
+        {
+          headers,
+        }
+      );
+      console.log("Données reçues:", data);  // Ajoute ça
+      setMembers(data.members);
     } catch (error) {
       console.error("Erreur de chargement des membres", error.message);
+      setMembers(membresData);
     } finally {
       setLoading(false);
     }
