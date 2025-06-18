@@ -7,6 +7,12 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { FaUserGraduate } from "react-icons/fa";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { BsBank } from "react-icons/bs";
+import {
+  API_CONFIG,
+  buildApiUrl,
+  getDefaultHeaders,
+} from "../services/api.config";
+import UploadImage from "../composants/UploadImage/Upload";
 
 // --- Import des icônes ---
 
@@ -56,6 +62,7 @@ const AdminIcon = () => (
 
 export const Profile = () => {
   const [user, setUser] = useState(null);
+  const [photo, setPhoto] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -69,6 +76,11 @@ export const Profile = () => {
         const userData = await authService.getCurrentUser();
         if (userData) {
           setUser(userData);
+          setPhoto(
+            userData?.photo && userData.photo !== ""
+              ? userData.photo
+              : "https://i.pravatar.cc/300"
+          );
         } else {
           setError(
             "Impossible de charger les données du profil. Veuillez vous reconnecter."
@@ -88,6 +100,28 @@ export const Profile = () => {
 
     fetchUserProfile();
   }, [navigate]);
+
+  const handleUploadComplete = async (url) => {
+    setPhoto(url);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(buildApiUrl(API_CONFIG.ENDPOINTS.AUTH.PHOTO), {
+        method: "PUT",
+        headers: getDefaultHeaders(token),
+        body: JSON.stringify({ photo: url }),
+      });
+      if (res.status === 200) {
+        alert("Photo mise à jour avec succès");
+      } else {
+        alert("Erreur de mise à jour");
+      }
+    } catch (error) {
+      console.error(
+        error.message,
+        "Erreur lors de la sauvegarde de l'image au backend"
+      );
+    }
+  };
 
   const handleLogout = () => {
     authService.logout();
@@ -134,15 +168,23 @@ export const Profile = () => {
         } ${!openSidebar && "hidden md:block"}`}
       >
         <div className="p-4 flex items-center justify-between border-b">
-          <h1
-            className={`text-xl font-bold text-green-600 transition-opacity duration-300 ${
-              openSidebar || window.innerWidth >= 768
-                ? "opacity-100"
-                : "opacity-0 hidden"
-            }`}
-          >
-            Mon Profil
-          </h1>
+          <div className="grid justify-center ">
+            {user ? (
+            <UploadImage
+              onUploadComplete={handleUploadComplete}
+              initialImage={photo}
+            />
+            
+          ) : (
+            <img
+              className="h-10 w-10 rounded-full"
+              src="/members/azoum.jpg"
+              alt="profil"
+            />
+          )}
+          <div>{user.nom}{" "} {user.prenom}</div>
+          </div>
+          
           <button
             onClick={() => setOpenSidebar(!openSidebar)}
             className="md:hidden p-2 rounded-full hover:bg-gray-200"
@@ -256,7 +298,11 @@ export const Profile = () => {
       <main className="flex-1 p-4 md:p-6 overflow-y-auto">
         {/* Mobile Menu Toggle */}
         <div className="md:hidden flex justify-between items-center mb-4">
-          <h1 className="text-xl font-bold text-gray-800">Mon Profil</h1>
+          {/* <h1 className="text-xl font-bold text-gray-800">Mon Profil</h1> */}
+          <UploadImage
+              onUploadComplete={handleUploadComplete}
+              initialImage={photo}
+            />
           <button
             onClick={() => setOpenSidebar(!openSidebar)}
             className="p-2 rounded-full hover:bg-gray-200"
